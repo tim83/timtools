@@ -16,7 +16,7 @@ def get_logger(name=__name__, verbose=False, filename=logfile):
 	if verbose:
 		console_handler.setLevel(logging.DEBUG)
 	else:
-		console_handler.setLevel(logging.NOTSET)
+		console_handler.setLevel(logging.WARN)
 
 	# add console handler to logger
 	logger.addHandler(console_handler)
