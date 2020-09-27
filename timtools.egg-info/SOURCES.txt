@@ -1,5 +1,6 @@
 setup.py
 timtools/__init__.py
+timtools/bash.py
 timtools/logger.py
 timtools.egg-info/PKG-INFO
 timtools.egg-info/SOURCES.txt
