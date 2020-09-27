@@ -24,7 +24,7 @@ def get_logger(name: str = __name__, verbose: bool = False, filename: str = LogC
 
 	# set log level
 	if verbose or "-v" in sys.argv[1:]:
-		logging.basicConfig(level=logging.DEBUG)
+		set_verbose(True)
 
 	# add console handler to logger
 	# logger.addHandler(console_handler)
