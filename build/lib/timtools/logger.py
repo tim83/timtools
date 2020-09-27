@@ -10,6 +10,13 @@ class LogConfig:
 	logfile: str = "/tmp/python_default.log"
 
 
+def set_verbose(verbose: bool) -> None:
+	if verbose:
+		logging.basicConfig(level=logging.DEBUG)
+	else:
+		logging.basicConfig(level=logging.WARNING)
+
+
 def get_logger(name: str = __name__, verbose: bool = False, filename: str = LogConfig.logfile) -> logging.Logger:
 	# Gets or creates a logger
 	logger = logging.getLogger(name)
@@ -17,7 +24,7 @@ def get_logger(name: str = __name__, verbose: bool = False, filename: str = LogC
 
 	# set log level
 	if verbose or "-v" in sys.argv[1:]:
-		logging.basicConfig(level=logging.DEBUG)
+		set_verbose(True)
 
 	# add console handler to logger
 	# logger.addHandler(console_handler)
