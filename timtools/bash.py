@@ -8,7 +8,7 @@ def get_output(cmd: list, passable_exit_codes: list = None, capture_stdout: bool
 	return run_bash(cmd, passable_exit_codes=passable_exit_codes, capture_stdout=capture_stdout, capture_stderr=capture_stderr)
 
 
-def run_bash(cmd: list, passable_exit_codes: list = None, capture_stdout: bool = False, capture_stderr: bool = False) -> str:
+def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool = False, capture_stderr: bool = False) -> str:
 	if type(cmd) == str:
 		cmd_str = cmd
 		cmd = cmd.split()
@@ -45,3 +45,6 @@ def run_bash(cmd: list, passable_exit_codes: list = None, capture_stdout: bool =
 		logging.debug(log_str)
 
 	return output_str
+
+
+run_bash = run
