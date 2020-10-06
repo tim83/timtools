@@ -3,6 +3,7 @@ timtools/__init__.py
 timtools/bash.py
 timtools/log.py
 timtools/logger.py
+timtools/notify.py
 timtools.egg-info/PKG-INFO
 timtools.egg-info/SOURCES.txt
 timtools.egg-info/dependency_links.txt
