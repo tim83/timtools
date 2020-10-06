@@ -2,3 +2,4 @@
 
 import timtools.log
 import timtools.bash
+import timtools.notify

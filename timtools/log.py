@@ -55,7 +55,6 @@ def get_logger(name: str, verbose: bool = False, filename: str = LogConfig.logfi
 	logger = logging.getLogger(name)
 	# logger.setLevel(logging.DEBUG)
 
-	logger.addHandler(LogConfig.get_stream_handler())
 	logger.addHandler(LogConfig.get_file_handler(filename))
 
 	# set log level
