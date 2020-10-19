@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name='timtools',
-	version='0.2',
+	version='0.21',
 	packages=['timtools'],
 	url='',
 	license='',
@@ -11,5 +11,7 @@ setup(
 	description='',
 	install_requires=[
 		"logging",
+		"validators",
+		"python-telegram-bot",
 	],
 )
