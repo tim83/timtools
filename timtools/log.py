@@ -1,11 +1,14 @@
 #! /usr/bin/python3
 
 import logging
+import os
 import sys
+
+user: str = os.environ["USER"]
 
 
 class LogConfig:
-	logfile: str = "python.log"
+	logfile: str = f"/tmp/python_{user}.log"
 	steam_format: str = '%(name)s (%(lineno)d): %(message)s'
 	file_format: str = '%(asctime)s - %(levelname)s - %(name)s (%(lineno)d): %(message)s'
 	stream_handler: logging.StreamHandler = None
