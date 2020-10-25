@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 
-user: str = os.environ["USER"]
+user: str = os.environ.get("USER", "tim")
 
 
 class LogConfig:
@@ -13,8 +13,8 @@ class LogConfig:
 	file_format: str = '%(asctime)s - %(levelname)s - %(name)s (%(lineno)d): %(message)s'
 	stream_handler: logging.StreamHandler = None
 	file_handler: logging.FileHandler = None
-	verbose_level:int = logging.DEBUG
-	quiet_level:int = logging.WARNING
+	verbose_level: int = logging.DEBUG
+	quiet_level: int = logging.WARNING
 
 	@staticmethod
 	def get_file_handler(filename) -> logging.FileHandler:
