@@ -33,7 +33,7 @@ def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool
 	output = process.communicate()[0] or bytes()
 	output_str = output.decode().rstrip()
 
-	# Capture exitcorde
+	# Capture exitcode
 	exitcode = process.returncode
 
 	# Log execution and raise error in case of failure

@@ -1,15 +1,15 @@
 #! /usr/bin/python3
 
-from telegram import Bot
-import validators
-import os
 import csv
-
 import datetime as dt
+import os
 
-from timtools.logger import get_logger
+import validators
+from telegram import Bot
 
-logger = get_logger(__name__)
+import timtools
+
+logger = timtools.log.get_logger(__name__)
 
 
 class TelegramNotify:
@@ -26,32 +26,33 @@ class TelegramNotify:
 
 	def send_text(self, text: str):
 		logger.info(f"Sending message to {self.chat_user}: {text}")
-		if not self.is_timedout(text):
+		if not self._is_timedout(text):
 			self.bot.send_message(self.chat_id, text)
-			self.log_notification(text)
+			self._log_notification(text)
 
 	def send_image(self, location: str):
 		logger.info(f"Sending image to {self.chat_user}: {location}")
-		if not self.is_timedout(location):
-			if self.is_url(location):
+		if not self._is_timedout(location):
+			if self._is_url(location):
 				self.bot.send_photo(self.chat_id, location)
 			else:
 				self.bot.send_photo(self.chat_id, open(location, 'rb'))
-			self.log_notification(location)
+			self._log_notification(location)
 
 	def send_file(self, location: str):
 		logger.info(f"Sending \"{location}\" to {self.chat_user}: {location}")
-		if not self.is_timedout(location):
-			if self.is_url(location):
+		if not self._is_timedout(location):
+			if self._is_url(location):
 				self.bot.send_document(self.chat_id, location)
 			else:
 				self.bot.send_document(self.chat_id, open(location, 'rb'))
-			self.log_notification(location)
+			self._log_notification(location)
 
-	def is_url(self, location: str):
+	@staticmethod
+	def _is_url(location: str):
 		return validators.url(location)
 
-	def is_timedout(self, text) -> bool:
+	def _is_timedout(self, text) -> bool:
 		if os.path.exists(self.timeout_file_location):
 			with open(self.timeout_file_location, "r", newline='') as timeout_file:
 				timeout_file_reader = csv.DictReader(timeout_file)
@@ -63,7 +64,7 @@ class TelegramNotify:
 						return True
 		return False
 
-	def log_notification(self, text: str):
+	def _log_notification(self, text: str):
 		with open(self.timeout_file_location, "w", newline='') as timeout_file:
 			timeout_file_writer = csv.DictWriter(timeout_file, fieldnames=self.timeout_file_fields)
 			timeout_file_writer.writeheader()
