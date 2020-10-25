@@ -1,5 +1,3 @@
 #! /usr/bin/python3
 
-import timtools.log
-import timtools.bash
-import timtools.notify
+from . import log, bash, notify
