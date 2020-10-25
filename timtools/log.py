@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 
-user: str = os.environ.get("USER", "tim")
+user: str = os.environ.get("USER", "NEMO")
 
 
 class LogConfig:
