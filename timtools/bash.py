@@ -1,20 +1,29 @@
 #! /usr/bin/python3
+"""Tools for running commands on the shell"""
 
 import logging
 import subprocess
 
 
 def get_output(cmd: list, passable_exit_codes: list = None, capture_stdout: bool = True, capture_stderr: bool = False) -> str:
-	return run_bash(cmd, passable_exit_codes=passable_exit_codes, capture_stdout=capture_stdout, capture_stderr=capture_stderr)
+	"""Run a comand and return the output"""
+	output = run_bash(
+		cmd,
+		passable_exit_codes=passable_exit_codes,
+		capture_stdout=capture_stdout,
+		capture_stderr=capture_stderr
+	)
+	return output
 
 
 def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool = False, capture_stderr: bool = False) -> str:
-	if type(cmd) == str:
+	"""Run a command"""
+	if isinstance(cmd, str):
 		cmd_str = cmd
 		cmd = cmd.split()
 	else:
 		cmd_str: str = "\"" + "\" \"".join(cmd) + "\""
-	logging.debug(f'Executing \"{cmd_str}\"')
+	logging.debug('Executing \"%s\"', cmd_str)
 
 	if passable_exit_codes is None:
 		passable_exit_codes = list()
@@ -41,8 +50,8 @@ def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool
 	if exitcode not in [0] + passable_exit_codes and "*" not in passable_exit_codes:
 		logging.error(log_str)
 		raise subprocess.CalledProcessError(exitcode, cmd_str, output=output_str)
-	else:
-		logging.debug(log_str)
+
+	logging.debug(log_str)
 
 	return output_str
 

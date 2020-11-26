@@ -1,3 +1,6 @@
+#! /usr/bin/python3
+"""Manager for the python package"""
+
 from setuptools import setup
 
 setup(

@@ -1,5 +1,4 @@
-setuptools~=50.3.0
+setuptools~=50.3.2
 logging~=0.4.9.6
 validators~=0.18.1
-Date***REMOVED***e~=4.3
-python-telegram-bot~=12.2.0
+python-telegram-bot~=12.8

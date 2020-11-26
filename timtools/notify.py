@@ -1,4 +1,5 @@
 #! /usr/bin/python3
+"""Module for telegram notifications"""
 
 import csv
 import datetime as dt
@@ -7,12 +8,13 @@ import os
 import validators
 from telegram import Bot
 
-import timtools
+import log
 
-logger = timtools.log.get_logger(__name__)
+logger = log.get_logger(__name__)
 
 
 class TelegramNotify:
+	"""Class for sending telegram notifications"""
 	# getting the bot details
 	chat_id: int = ***REMOVED***
 	chat_user: str = "***REMOVED***"
@@ -25,13 +27,15 @@ class TelegramNotify:
 		self.timeout_window: dt.timedelta = timeout
 
 	def send_text(self, text: str):
-		logger.info(f"Sending message to {self.chat_user}: {text}")
+		"""Sends a text message"""
+		logger.info("Sending message to %s: %s", self.chat_user, text)
 		if not self._is_timedout(text):
 			self.bot.send_message(self.chat_id, text)
 			self._log_notification(text)
 
 	def send_image(self, location: str):
-		logger.info(f"Sending image to {self.chat_user}: {location}")
+		"""Sends an image"""
+		logger.info("Sending location to %s: %s", self.chat_user, location)
 		if not self._is_timedout(location):
 			if self._is_url(location):
 				self.bot.send_photo(self.chat_id, location)
@@ -40,7 +44,8 @@ class TelegramNotify:
 			self._log_notification(location)
 
 	def send_file(self, location: str):
-		logger.info(f"Sending \"{location}\" to {self.chat_user}: {location}")
+		"""Sends a file"""
+		logger.info("Sending \"%(location)s\" to %(user)s: %(location)s", location=location, user=self.chat_user)
 		if not self._is_timedout(location):
 			if self._is_url(location):
 				self.bot.send_document(self.chat_id, location)
@@ -60,7 +65,7 @@ class TelegramNotify:
 					epoch = float(row["date"])
 					window = dt.datetime.now() - dt.datetime.fromtimestamp(epoch)
 					if row["text"] == text and window < self.timeout_window:
-						logger.warning(f"Notification with text \"{text}\" was send {window.total_seconds()} seconds ago")
+						logger.warning("Notification with text \"%s\" was send %d seconds ago", text, window.total_seconds())
 						return True
 		return False
 
