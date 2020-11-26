@@ -1,9 +1,9 @@
 import pytest
 import subprocess
 
-import bash
+from timtools import bash
 
-test_str = "hoi"
+test_str = "Hello World"
 
 def test_bash_getoutput():
 	assert bash.get_output(["echo", test_str]) == test_str
