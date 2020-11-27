@@ -8,7 +8,7 @@ import os
 import validators
 from telegram import Bot
 
-import log
+from timtools import log
 
 logger = log.get_logger(__name__)
 
