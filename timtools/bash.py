@@ -48,7 +48,6 @@ def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool
 	# Log execution and raise error in case of failure
 	log_str = f"\"{cmd_str}\" has exited with code {exitcode}: {output_str}"
 	if exitcode not in [0] + passable_exit_codes and "*" not in passable_exit_codes:
-		logging.error(log_str)
 		raise subprocess.CalledProcessError(exitcode, cmd_str, output=output_str)
 
 	logging.debug(log_str)
