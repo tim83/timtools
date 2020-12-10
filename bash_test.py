@@ -1,21 +1,27 @@
+#! /usr/bin/python3
+"""Tests the functions in bash.py related to executing bash command"""
+
 import subprocess
 
 import pytest
 
 from timtools import bash
 
-test_str = "Hello World"
+TEST_STR: str = "Hello World"
 
 
 def test_bash_getoutput():
-	assert bash.get_output(["echo", test_str]) == test_str
+	"""Tests the get_output method from bash.py"""
+	assert bash.get_output(["echo", "-n", TEST_STR]) == TEST_STR
 
 
 def test_bash_run():
+	"""Tests the run method from bash.py"""
 	# Check output of command
-	assert bash.run(["echo", test_str]) == ""
-	assert bash.run(["echo", test_str], capture_stdout=True) == test_str
-	assert bash.run(["echo", test_str], capture_stderr=True) == ""
+	assert bash.run(["echo", "-n", TEST_STR]) == ""
+	assert bash.run(["echo", "-n", TEST_STR], capture_stdout=True) == TEST_STR
+	assert bash.run(["echo", "-n", TEST_STR], capture_stderr=True) == ""
+	assert bash.run(["echo", "-n", TEST_STR], capture_stderr=True) == ""
 
 	# Check command that does not exist
 	with pytest.raises(FileNotFoundError):
