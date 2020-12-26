@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 	name='timtools',
-	version='0.23',
+	version='0.24',
 	packages=['timtools'],
 	url='',
 	license='',
@@ -13,7 +13,6 @@ setup(
 	author_email='tim@mees.vip',
 	description='',
 	install_requires=[
-		"logging",
 		"validators",
 		"python-telegram-bot",
 	],
