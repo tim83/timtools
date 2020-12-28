@@ -2,21 +2,35 @@
 """Tools for running commands on the shell"""
 
 import logging
+import os
 import subprocess
 
 
-def get_output(cmd: list, passable_exit_codes: list = None, capture_stdout: bool = True, capture_stderr: bool = False) -> str:
+def get_output(
+		cmd: list,
+		passable_exit_codes: list = None,
+		capture_stdout: bool = True,
+		capture_stderr: bool = False,
+		custom_env: dict = None
+) -> str:
 	"""Run a comand and return the output"""
 	output = run_bash(
 		cmd,
 		passable_exit_codes=passable_exit_codes,
 		capture_stdout=capture_stdout,
-		capture_stderr=capture_stderr
+		capture_stderr=capture_stderr,
+		custom_env=custom_env,
 	)
 	return output
 
 
-def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool = False, capture_stderr: bool = False) -> str:
+def run(
+		cmd: (list, str),
+		passable_exit_codes: list = None,
+		capture_stdout: bool = False,
+		capture_stderr: bool = False,
+		custom_env: dict = None
+) -> str:
 	"""Run a command"""
 	if isinstance(cmd, str):
 		cmd_str = cmd
@@ -28,15 +42,20 @@ def run(cmd: (list, str), passable_exit_codes: list = None, capture_stdout: bool
 	if passable_exit_codes is None:
 		passable_exit_codes = list()
 
+	env = os.environ.copy()
+	if custom_env is not None:
+		for key in custom_env.keys():
+			env[key] = custom_env[key]
+
 	# Execute command and redirect output
 	if capture_stdout and capture_stderr:
-		process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
 	elif capture_stdout and not capture_stderr:
-		process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+		process = subprocess.Popen(cmd, stdout=subprocess.PIPE, env=env)
 	elif not capture_stdout and capture_stderr:
-		process = subprocess.Popen(cmd, stderr=subprocess.PIPE)
+		process = subprocess.Popen(cmd, stderr=subprocess.PIPE, env=env)
 	else:
-		process = subprocess.Popen(cmd)
+		process = subprocess.Popen(cmd, env=env)
 
 	# Capture output
 	output = process.communicate()[0] or bytes()

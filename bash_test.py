@@ -13,6 +13,7 @@ TEST_STR: str = "Hello World"
 def test_bash_getoutput():
 	"""Tests the get_output method from bash.py"""
 	assert bash.get_output(["echo", "-n", TEST_STR]) == TEST_STR
+	assert f"TEST_ENV={TEST_STR}" in bash.get_output(["env"], custom_env={"TEST_ENV": TEST_STR})
 
 
 def test_bash_run():
@@ -20,6 +21,7 @@ def test_bash_run():
 	# Check output of command
 	assert bash.run(["echo", "-n", TEST_STR]) == ""
 	assert bash.run(["echo", "-n", TEST_STR], capture_stdout=True) == TEST_STR
+	assert f"TEST_ENV={TEST_STR}" in bash.run(["env"], capture_stdout=True, custom_env={"TEST_ENV": TEST_STR})
 	assert bash.run(["echo", "-n", TEST_STR], capture_stderr=True) == ""
 	assert bash.run(["echo", "-n", TEST_STR], capture_stderr=True) == ""
 
