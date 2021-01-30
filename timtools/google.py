@@ -4,14 +4,19 @@
 import locale
 import os
 import pickle
+import pandas as pd
+from typing import List
 
 import google.oauth2.credentials
 import googleapiclient.discovery
-import pandas as pd
+from apiclient.http import MediaIoBaseDownload, MediaFileUpload
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-SCOPES: list = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES: List[str] = [
+	'https://www.googleapis.com/auth/spreadsheets',
+	'https://www.googleapis.com/auth/drive'
+]
 
 
 def _obtain_credentials() -> google.oauth2.credentials.Credentials:
@@ -53,6 +58,17 @@ def _load_sheet_api() -> googleapiclient.discovery.Resource:
 	)
 	sheet = service.spreadsheets()
 	return sheet
+
+
+def _load_drive_api() -> googleapiclient.discovery.Resource:
+	"""Returns the API object for manipulating files"""
+	credentials = _obtain_credentials()
+	service = googleapiclient.discovery.build(
+		'drive', 'v3',
+		credentials=credentials,
+		cache_discovery=False
+	)
+	return service
 
 
 def import_spreadsheet(
@@ -107,6 +123,39 @@ def export_to_sheet(sheet_id: str, selected_range: str, data: pd.DataFrame):
 	).execute()
 
 
+def upload_file(filename: str, file_id: str = None):
+	""""
+	Uploads or updates a file in Google Drive
+
+	:rtype: None
+	:param filename: The file thats needs to be uploaded
+	:param file_id: The ID of the to be uploaded file if not provided, a new file will be created
+	"""
+	basename: str = os.path.basename(filename)
+	title, ext = os.path.splitext(filename)
+
+	drive_api = _load_drive_api()
+
+	file_metadata = {'name': basename, 'title': title}
+
+	media_body = MediaFileUpload(filename, resumable=True)
+
+	if file_id is None:
+		file = drive_api.files().create(
+			body=file_metadata,
+			media_body=media_body,
+			fields='id'
+		).execute()
+		file_id = file.get('ID')
+		print(f"The file ID is {file_id}")
+	else:
+		drive_api.files().update(
+			fileId=file_id,
+			body=file_metadata,
+			media_body=media_body
+		).execute()
+
+
 if __name__ == "__main__":
 	TEST_SHEET_ID = '1FdGvHITMbk_DyONFmE00IcZY79He2SWNUT35klXJu40'
 	IMPORT_RANGE = 'Import Data!A1:F6'
@@ -117,4 +166,5 @@ if __name__ == "__main__":
 		column_header=True,
 		row_index=True
 	)
-	print(df)
+
+	upload_file("../setup.py", file_id="1zbDUpKFb58YZtXIonEEPRObbadGkjKfA")
