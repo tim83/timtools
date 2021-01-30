@@ -19,6 +19,5 @@ setup(
 		"google-api-core",
 		"google-auth-httplib2",
 		"google-auth-oauthlib",
-		"oath2client",
 	],
 )
