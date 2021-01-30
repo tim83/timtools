@@ -46,7 +46,11 @@ def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 def _load_sheet_api() -> googleapiclient.discovery.Resource:
 	"""Returns the API object for manipulating sheets"""
 	credentials = _obtain_credentials()
-	service = googleapiclient.discovery.build('sheets', 'v4', credentials=credentials)
+	service = googleapiclient.discovery.build(
+		'sheets', 'v4',
+		credentials=credentials,
+		cache_discovery=False
+	)
 	sheet = service.spreadsheets()
 	return sheet
 
