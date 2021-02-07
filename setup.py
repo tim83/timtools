@@ -20,5 +20,5 @@ setup(
 		"google-auth-httplib2",
 		"google-auth-oauthlib",
 	],
-	data_files=[('', 'timtools/client_secret.json')]
+	data_files=[('', ['timtools/client_secret.json'])]
 )
