@@ -18,11 +18,13 @@ SCOPES: List[str] = [
 	'https://www.googleapis.com/auth/drive'
 ]
 
+PROJECT_DIR:str = os.path.dirname(__file__)
 
 def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 	"""Logs the user in and returns the credentials"""
 
 	token_file: str = os.path.expanduser('~/.cache/timtools/google_token.pickle')
+	client_secrets_file:str=os.path.join(PROJECT_DIR,'client_secret.json')
 
 	# Load credentials if they exist
 	if os.path.exists(token_file):
@@ -36,7 +38,7 @@ def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 		if credentials and credentials.expired and credentials.refresh_token:
 			credentials.refresh(Request())
 		else:
-			flow = InstalledAppFlow.from_client_secrets_file('client_secret.json', SCOPES)
+			flow = InstalledAppFlow.from_client_secrets_file(client_secrets_file, SCOPES)
 			credentials = flow.run_local_server(port=0)
 		# Save the credentials for the next run
 		token_dir: str = os.path.dirname(token_file)

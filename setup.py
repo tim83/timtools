@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 	name='timtools',
-	version='0.27',
+	version='0.27.1',
 	packages=['timtools'],
 	url='',
 	license='',
@@ -20,4 +20,5 @@ setup(
 		"google-auth-httplib2",
 		"google-auth-oauthlib",
 	],
+	data_files=[('', 'timtools/client_secret.json')]
 )
