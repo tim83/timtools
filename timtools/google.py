@@ -6,6 +6,8 @@ import os
 import pickle
 import pandas as pd
 from typing import List
+import datetime as dt
+import pytz
 
 import google.oauth2.credentials
 import googleapiclient.discovery
@@ -18,13 +20,14 @@ SCOPES: List[str] = [
 	'https://www.googleapis.com/auth/drive'
 ]
 
-PROJECT_DIR:str = os.path.dirname(__file__)
+PROJECT_DIR: str = os.path.dirname(__file__)
+
 
 def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 	"""Logs the user in and returns the credentials"""
 
 	token_file: str = os.path.expanduser('~/.cache/timtools/google_token.pickle')
-	client_secrets_file:str=os.path.join(PROJECT_DIR,'client_secret.json')
+	client_secrets_file: str = os.path.join(PROJECT_DIR, 'client_secret.json')
 
 	# Load credentials if they exist
 	if os.path.exists(token_file):
@@ -156,6 +159,20 @@ def upload_file(filename: str, file_id: str = None):
 			body=file_metadata,
 			media_body=media_body
 		).execute()
+
+
+def modifiedDate(file_id: str) -> dt.datetime:  # TODO: Add test
+	"""
+	Returns the datetime when a file was last modified
+	:param file_id: The file ID of the file
+	:return: The modified time
+	"""
+	drive_api = _load_drive_api()
+	file = drive_api.files().get(fileId=file_id).execute()
+	date_str = file.get('modifiedDate')
+	date = dt.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
+	date_utc = date.replace(tzinfo=pytz.utc)
+	return date_utc.astimezone()
 
 
 if __name__ == "__main__":
