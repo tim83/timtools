@@ -161,15 +161,15 @@ def upload_file(filename: str, file_id: str = None):
 		).execute()
 
 
-def modifiedDate(file_id: str) -> dt.datetime:  # TODO: Add test
+def modifiedDate(file_id: str) -> dt.datetime:
 	"""
 	Returns the datetime when a file was last modified
 	:param file_id: The file ID of the file
 	:return: The modified time
 	"""
 	drive_api = _load_drive_api()
-	file = drive_api.files().get(fileId=file_id).execute()
-	date_str = file.get('modifiedDate')
+	file = drive_api.files().get(fileId=file_id, fields="modified***REMOVED***e").execute()
+	date_str = file.get('modified***REMOVED***e')
 	date = dt.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
 	date_utc = date.replace(tzinfo=pytz.utc)
 	return date_utc.astimezone()
@@ -179,11 +179,7 @@ if __name__ == "__main__":
 	TEST_SHEET_ID = '1FdGvHITMbk_DyONFmE00IcZY79He2SWNUT35klXJu40'
 	IMPORT_RANGE = 'Import Data!A1:F6'
 
-	df = import_spreadsheet(
+	md = modifiedDate(
 		TEST_SHEET_ID,
-		IMPORT_RANGE,
-		column_header=True,
-		row_index=True
 	)
-
-	upload_file("../setup.py", file_id="1zbDUpKFb58YZtXIonEEPRObbadGkjKfA")
+	print(md)
