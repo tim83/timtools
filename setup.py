@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 	name='timtools',
-	version='0.28.2',
+	version='0.29',
 	packages=['timtools'],
 	url='',
 	license='',
