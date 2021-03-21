@@ -15,19 +15,18 @@ from apiclient.http import MediaIoBaseDownload, MediaFileUpload
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
+from timtools import settings
+
 SCOPES: List[str] = [
 	'https://www.googleapis.com/auth/spreadsheets',
 	'https://www.googleapis.com/auth/drive'
 ]
 
-PROJECT_DIR: str = os.path.dirname(__file__)
-
 
 def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 	"""Logs the user in and returns the credentials"""
 
-	token_file: str = os.path.expanduser('~/.cache/timtools/google_token.pickle')
-	client_secrets_file: str = os.path.join(PROJECT_DIR, 'client_secret.json')
+	token_file: str = os.path.join(settings.CACHE_DIR, '/google_token.pickle')
 
 	# Load credentials if they exist
 	if os.path.exists(token_file):
@@ -41,7 +40,10 @@ def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 		if credentials and credentials.expired and credentials.refresh_token:
 			credentials.refresh(Request())
 		else:
-			flow = InstalledAppFlow.from_client_secrets_file(client_secrets_file, SCOPES)
+			flow = InstalledAppFlow.from_client_secrets_file(
+				settings.GOOGLE_CLIENT_SECRET_FILE,
+				SCOPES
+			)
 			credentials = flow.run_local_server(port=0)
 		# Save the credentials for the next run
 		token_dir: str = os.path.dirname(token_file)
@@ -168,8 +170,8 @@ def modifiedDate(file_id: str) -> dt.datetime:
 	:return: The modified time
 	"""
 	drive_api = _load_drive_api()
-	file = drive_api.files().get(fileId=file_id, fields="modified***REMOVED***e").execute()
-	date_str = file.get('modified***REMOVED***e')
+	file = drive_api.files().get(fileId=file_id, fields="modifiedTime").execute()
+	date_str = file.get('modifiedTime')
 	date = dt.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
 	date_utc = date.replace(tzinfo=pytz.utc)
 	return date_utc.astimezone()

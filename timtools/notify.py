@@ -8,22 +8,24 @@ import os
 import validators
 from telegram import Bot
 
-from timtools import log
+from timtools import log, settings
 
 logger = log.get_logger(__name__)
+
+TELEGRAM_USER_CONFIG = settings.USER_CONFIG["telegram"]
 
 
 class TelegramNotify:
 	"""Class for sending telegram notifications"""
 	# getting the bot details
-	chat_id: int = ***REMOVED***
-	chat_user: str = "***REMOVED***"
+	chat_id: int = TELEGRAM_USER_CONFIG.get("chat_id")
+	chat_user: str = TELEGRAM_USER_CONFIG.get("chat_user")
 	timeout_file_location: str = "/tmp/telegram_notifications.csv"
 	timeout_file_fields: list = ["date", "text"]
 
 	def __init__(self, timeout: dt.timedelta = dt.timedelta(minutes=5)):
 		# initializing the bot with API
-		self.bot: Bot = Bot("***REMOVED***")
+		self.bot: Bot = Bot(TELEGRAM_USER_CONFIG.get("api_key"))
 		self.timeout_window: dt.timedelta = timeout
 
 	def send_text(self, text: str):
@@ -45,7 +47,8 @@ class TelegramNotify:
 
 	def send_file(self, location: str):
 		"""Sends a file"""
-		logger.info("Sending \"%(location)s\" to %(user)s: %(location)s", location=location, user=self.chat_user)
+		logger.info("Sending \"%(location)s\" to %(user)s: %(location)s", location=location,
+			user=self.chat_user)
 		if not self._is_timedout(location):
 			if self._is_url(location):
 				self.bot.send_document(self.chat_id, location)
@@ -65,7 +68,8 @@ class TelegramNotify:
 					epoch = float(row["date"])
 					window = dt.datetime.now() - dt.datetime.fromtimestamp(epoch)
 					if row["text"] == text and window < self.timeout_window:
-						logger.warning("Notification with text \"%s\" was send %d seconds ago", text, window.total_seconds())
+						logger.warning("Notification with text \"%s\" was send %d seconds ago",
+							text, window.total_seconds())
 						return True
 		return False
 

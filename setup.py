@@ -9,7 +9,7 @@ setup(
 	packages=['timtools'],
 	url='',
 	license='',
-	author='***REMOVED*** Mees',
+	author='Tim Mees',
 	author_email='tim@mees.vip',
 	description='',
 	install_requires=[

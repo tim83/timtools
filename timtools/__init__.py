@@ -3,4 +3,4 @@
 
 from timtools import bash, log, notify
 
-_ = [log, bash, notify]
+_ = [log, bash, notify]  # Make sure the imports are not removed due to non-usage

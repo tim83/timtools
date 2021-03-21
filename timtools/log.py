@@ -64,7 +64,8 @@ def _get_stream_handler() -> logging.StreamHandler:
 	return stream_handler
 
 
-def get_logger(name: str, verbose: bool = False, filename: str = LogConfig.logfile) -> logging.Logger:
+def get_logger(name: str, verbose: bool = False,
+		filename: str = LogConfig.logfile) -> logging.Logger:
 	"""Return a logging object"""
 	# Gets or creates a logger)
 	logger = logging.getLogger(name)
