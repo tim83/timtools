@@ -26,7 +26,7 @@ SCOPES: List[str] = [
 def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 	"""Logs the user in and returns the credentials"""
 
-	token_file: str = os.path.join(settings.CACHE_DIR, '/google_token.pickle')
+	token_file: str = os.path.join(settings.CACHE_DIR, 'google_token.pickle')
 
 	# Load credentials if they exist
 	if os.path.exists(token_file):
