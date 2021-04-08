@@ -4,7 +4,10 @@
 import logging
 import os
 import sys
-import tqdm
+from typing import *
+
+if TYPE_CHECKING:
+	from pathlib import Path
 
 user: str = os.environ.get("USER", "NEMO")
 
@@ -20,7 +23,7 @@ class LogConfig:
 	quiet_level: int = logging.WARNING
 
 	@staticmethod
-	def get_file_handler(filename: str) -> logging.FileHandler:
+	def get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:
 		"""Returns a filehandler"""
 		if not LogConfig.file_handler:
 			LogConfig.file_handler = _get_file_handler(filename)
@@ -49,7 +52,7 @@ def set_verbose(verbose: bool, logger: logging.Logger = None) -> None:
 		logger.setLevel(level)
 
 
-def _get_file_handler(filename: str) -> logging.FileHandler:
+def _get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:
 	"""Returns a filehandles"""
 	file_handler = logging.FileHandler(filename)
 	formatter = logging.Formatter(LogConfig.file_format)
@@ -68,22 +71,20 @@ def _get_stream_handler() -> logging.StreamHandler:
 def get_logger(
 		name: str,
 		verbose: bool = False,
-		filename: str = LogConfig.logfile,
-		tqdm_compatible:bool = False,
+		filename: Union[str, Path] = LogConfig.logfile,
 ) -> logging.Logger:
-	"""Return a logging object"""
+	"""
+	Return a logging object
+	:arg name: The name of the logger
+	:arg verbose: Does the logger need to print all avaible output?
+	:arg filename: The file where the outputs needs to be stored
+	"""
 	# Gets or creates a logger)
 	logger = logging.getLogger(name)
 
 	file_handler = LogConfig.get_file_handler(filename)
 	if file_handler in logger.handlers:
 		logger.addHandler(file_handler)
-	if tqdm_compatible is True:
-		logger.propagate = 0
-		stream_handler = LogConfig.get_stream_handler()
-		stream_handler.setStream(tqdm.tqdm)
-		if stream_handler in logger.handlers:
-			logger.addHandler(stream_handler)
 
 	# set log level
 	if verbose or "-v" in sys.argv[1:]:
