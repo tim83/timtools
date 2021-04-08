@@ -69,17 +69,21 @@ def get_logger(
 		name: str,
 		verbose: bool = False,
 		filename: str = LogConfig.logfile,
-		tqdm_compatible:bool = True,
+		tqdm_compatible:bool = False,
 ) -> logging.Logger:
 	"""Return a logging object"""
 	# Gets or creates a logger)
 	logger = logging.getLogger(name)
 
-	logger.addHandler(LogConfig.get_file_handler(filename))
+	file_handler = LogConfig.get_file_handler(filename)
+	if file_handler in logger.handlers:
+		logger.addHandler(file_handler)
 	if tqdm_compatible is True:
+		logger.propagate = 0
 		stream_handler = LogConfig.get_stream_handler()
 		stream_handler.setStream(tqdm.tqdm)
-		logger.addHandler(stream_handler)
+		if stream_handler in logger.handlers:
+			logger.addHandler(stream_handler)
 
 	# set log level
 	if verbose or "-v" in sys.argv[1:]:
