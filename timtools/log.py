@@ -4,6 +4,7 @@
 import logging
 import os
 import sys
+import tqdm
 
 user: str = os.environ.get("USER", "NEMO")
 
@@ -64,13 +65,21 @@ def _get_stream_handler() -> logging.StreamHandler:
 	return stream_handler
 
 
-def get_logger(name: str, verbose: bool = False,
-		filename: str = LogConfig.logfile) -> logging.Logger:
+def get_logger(
+		name: str,
+		verbose: bool = False,
+		filename: str = LogConfig.logfile,
+		tqdm_compatible:bool = True,
+) -> logging.Logger:
 	"""Return a logging object"""
 	# Gets or creates a logger)
 	logger = logging.getLogger(name)
 
 	logger.addHandler(LogConfig.get_file_handler(filename))
+	if tqdm_compatible is True:
+		stream_handler = LogConfig.get_stream_handler()
+		stream_handler.setStream(tqdm.tqdm)
+		logger.addHandler(stream_handler)
 
 	# set log level
 	if verbose or "-v" in sys.argv[1:]:
