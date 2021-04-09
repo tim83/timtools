@@ -4,8 +4,8 @@
 import logging
 import os
 import sys
-from typing import *
 from pathlib import Path
+from typing import *
 
 user: str = os.environ.get("USER", "NEMO")
 
@@ -19,6 +19,8 @@ class LogConfig:
 	file_handler: logging.FileHandler = None
 	verbose_level: int = logging.DEBUG
 	quiet_level: int = logging.WARNING
+	current_level: int = logging.WARNING
+	loggers: List[logging.Logger] = []
 
 	@staticmethod
 	def get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:
@@ -48,6 +50,10 @@ def set_verbose(verbose: bool, logger: logging.Logger = None) -> None:
 	logging.basicConfig(level=level)
 	if logger:
 		logger.setLevel(level)
+	else:
+		LogConfig.current_level = level
+		for logger in LogConfig.loggers:
+			logger.setLevel(level)
 
 
 def _get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:
@@ -79,6 +85,7 @@ def get_logger(
 	"""
 	# Gets or creates a logger)
 	logger = logging.getLogger(name)
+	LogConfig.loggers.append(logger)
 
 	file_handler = LogConfig.get_file_handler(filename)
 	if file_handler in logger.handlers:
@@ -88,6 +95,6 @@ def get_logger(
 	if verbose or "-v" in sys.argv[1:]:
 		logger.setLevel(LogConfig.verbose_level)
 	else:
-		logger.setLevel(LogConfig.quiet_level)
+		logger.setLevel(LogConfig.current_level)
 
 	return logger

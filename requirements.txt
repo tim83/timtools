@@ -12,3 +12,4 @@ tqdm~=4.59.0
 pytz~=2020.5
 google-api-python-client~=1.6.7
 configparser~=5.0.1
+testfixtures~=6.15.0
