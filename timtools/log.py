@@ -5,9 +5,7 @@ import logging
 import os
 import sys
 from typing import *
-
-if TYPE_CHECKING:
-	from pathlib import Path
+from pathlib import Path
 
 user: str = os.environ.get("USER", "NEMO")
 
