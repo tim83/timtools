@@ -96,13 +96,13 @@ def import_spreadsheet(
 	values = result.get('values', [])
 	locale.setlocale(locale.LC_NUMERIC, '')
 
+	data = pd.DataFrame(values, dtype="float")
 	if column_header:
-		data_values = values[1:]
-		column_headers = values[0]
+		column_headers = data.iloc[0]
+		data.drop(data.index[0], inplace=True)
+		data.rename(columns=column_headers, inplace=True)
 	else:
-		data_values = values
-		column_headers = None
-	data = pd.DataFrame(data_values, columns=column_headers, dtype="float")
+		column_headers = data.columns
 
 	if row_index:
 		data.set_index(column_headers[0], inplace=True)
