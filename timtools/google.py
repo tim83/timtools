@@ -96,7 +96,7 @@ def import_spreadsheet(
 	values = result.get('values', [])
 	locale.setlocale(locale.LC_NUMERIC, '')
 
-	data = pd.DataFrame(values, dtype="float")
+	data = pd.DataFrame(values)
 	if column_header:
 		column_headers = data.iloc[0]
 		data.drop(data.index[0], inplace=True)
