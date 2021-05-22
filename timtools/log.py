@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import *
+import typing
 
 user: str = os.environ.get("USER", "NEMO")
 
@@ -20,10 +20,10 @@ class LogConfig:
 	verbose_level: int = logging.DEBUG
 	quiet_level: int = logging.WARNING
 	current_level: int = logging.WARNING
-	loggers: List[logging.Logger] = []
+	loggers: typing.List[logging.Logger] = []
 
 	@staticmethod
-	def get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:
+	def get_file_handler(filename: typing.Union[str, Path]) -> logging.FileHandler:
 		"""Returns a filehandler"""
 		if not LogConfig.file_handler:
 			LogConfig.file_handler = _get_file_handler(filename)
@@ -56,7 +56,7 @@ def set_verbose(verbose: bool, logger: logging.Logger = None) -> None:
 			active_logger.setLevel(level)
 
 
-def _get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:
+def _get_file_handler(filename: typing.Union[str, Path]) -> logging.FileHandler:
 	"""Returns a filehandles"""
 	file_handler = logging.FileHandler(filename)
 	formatter = logging.Formatter(LogConfig.file_format)
@@ -75,7 +75,7 @@ def _get_stream_handler() -> logging.StreamHandler:
 def get_logger(
 		name: str,
 		verbose: bool = False,
-		filename: Union[str, Path] = LogConfig.logfile,
+		filename: typing.Union[str, Path] = LogConfig.logfile,
 ) -> logging.Logger:
 	"""
 	Return a logging object

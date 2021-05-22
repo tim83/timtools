@@ -1,6 +1,5 @@
-import datetime as dt
 import logging
-from typing import *
+import typing
 
 import pytest
 from testfixtures import LogCapture, log_capture
@@ -8,7 +7,7 @@ from testfixtures import LogCapture, log_capture
 from timtools import log
 
 logger_name: str = "TEST"
-logging_levels: List[Tuple[str, int]] = [
+logging_levels: typing.List[typing.Tuple[str, int]] = [
 	("debug", logging.DEBUG),
 	("info", logging.INFO),
 	("warning", logging.WARNING),
@@ -31,7 +30,7 @@ def test_get_logger_verbose(capture, verbose: bool):
 	for level_name, level_int in logging_levels:
 		logger.log(level_int, f"{level_name} log")
 
-	expected_output: List[Tuple[str, str, str]] = [
+	expected_output: typing.List[typing.Tuple[str, str, str]] = [
 		(logger_name, level_name.upper(), f"{level_name} log")
 		for level_name, level_int in logging_levels
 		if level_int >= min_level
@@ -48,7 +47,7 @@ def test_set_verbose(capture, verbose_set: bool):
 	for level_name, level_int in logging_levels:
 		logger.log(level_int, f"{level_name} log")
 
-	expected_output: List[Tuple[str, str, str]] = [
+	expected_output: typing.List[typing.Tuple[str, str, str]] = [
 		(logger_name, level_name.upper(), f"{level_name} log")
 		for level_name, level_int in logging_levels
 		if level_int >= min_level
