@@ -1,17 +1,17 @@
 #! /usr/bin/python3
 """Deals with downloading en uploading data from google sheets"""
 
+import datetime as dt
 import locale
 import os
 import pickle
-import pandas as pd
 from typing import List
-import datetime as dt
-import pytz
 
 import google.oauth2.credentials
 import googleapiclient.discovery
-from apiclient.http import MediaIoBaseDownload, MediaFileUpload
+import pandas as pd
+import pytz
+from apiclient.http import MediaFileUpload
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
@@ -31,7 +31,7 @@ def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 	# Load credentials if they exist
 	if os.path.exists(token_file):
 		with open(token_file, 'rb') as token:
-			credentials = pickle.load(token)
+			credentials = pickle.load(token)  # skipcq: BAN-B301
 	else:
 		credentials = None
 
