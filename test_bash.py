@@ -2,7 +2,6 @@
 """Tests the functions in bash.py related to executing bash command"""
 
 import subprocess
-
 import pytest
 
 from timtools import bash

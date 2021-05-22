@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 import datetime as dt
-
+import pytest
 import pandas as pd
 
 from timtools import google
@@ -39,4 +39,4 @@ def test_google_import_spreadsheet():
 
 def test_google_modifiedDate():
     """Test the method for obtaining the modified date for a file from google drive"""
-    assert type(google.modifiedDate(TEST_SHEET_ID)) == dt.datetime
+    assert type(google.modifiedDate(TEST_SHEET_ID)) is dt.datetime
