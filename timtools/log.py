@@ -12,7 +12,7 @@ user: str = os.environ.get("USER", "NEMO")
 
 class LogConfig:
 	"""Configuration for logging"""
-	logfile: str = f"/tmp/python_{user}.log"
+	logfile: str = f"/var/tmp/python_{user}.log"
 	steam_format: str = '%(name)s (%(lineno)d): %(message)s'
 	file_format: str = '%(asctime)s - %(levelname)s - %(name)s (%(lineno)d): %(message)s'
 	stream_handler: logging.StreamHandler = None

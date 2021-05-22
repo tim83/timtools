@@ -25,7 +25,7 @@ def capture_log():
 
 @log_capture()
 @pytest.mark.parametrize("verbose", [True, False])
-def test_get_logger_verbose(capture_log, verbose: bool):
+def test_get_logger_verbose(capture, verbose: bool):
 	logger = log.get_logger(logger_name, verbose=verbose)
 	min_level = logging.DEBUG if verbose else logging.WARNING
 	for level_name, level_int in logging_levels:
@@ -36,7 +36,7 @@ def test_get_logger_verbose(capture_log, verbose: bool):
 		for level_name, level_int in logging_levels
 		if level_int >= min_level
 	]
-	capture_log.check(*expected_output)
+	capture.check(*expected_output)
 
 
 @log_capture()
