@@ -13,7 +13,7 @@ IMPORT_RANGE = 'Import Data!A1:F6'
 def test_google_import_spreadsheet():
     """Test the models to import data from google sheets"""
     correct_data_headers = pd.DataFrame(
-        [[int(row * 10 + column) for column in range(1, 6)] for row in range(1, 6)],
+        [[str(row * 10 + column) for column in range(1, 6)] for row in range(1, 6)],
         columns=[f"Column {column}" for column in range(1, 6)],
         index=[f"Row {row}" for row in range(1, 6)]
     )
