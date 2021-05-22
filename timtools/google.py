@@ -139,7 +139,7 @@ def upload_file(filename: str, file_id: str = None):
 	:param file_id: The ID of the to be uploaded file if not provided, a new file will be created
 	"""
 	basename: str = os.path.basename(filename)
-	title, ext = os.path.splitext(filename)
+	title, _ = os.path.splitext(filename)
 
 	drive_api = _load_drive_api()
 

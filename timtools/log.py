@@ -52,8 +52,8 @@ def set_verbose(verbose: bool, logger: logging.Logger = None) -> None:
 		logger.setLevel(level)
 	else:
 		LogConfig.current_level = level
-		for logger in LogConfig.loggers:
-			logger.setLevel(level)
+		for active_logger in LogConfig.loggers:
+			active_logger.setLevel(level)
 
 
 def _get_file_handler(filename: Union[str, Path]) -> logging.FileHandler:

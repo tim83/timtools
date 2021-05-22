@@ -18,14 +18,14 @@ logging_levels: List[Tuple[str, int]] = [
 
 
 @pytest.fixture(autouse=True)
-def capture():
+def capture_log():
 	with LogCapture() as capture:
 		yield capture
 
 
 @log_capture()
 @pytest.mark.parametrize("verbose", [True, False])
-def test_get_logger_verbose(capture, verbose: bool):
+def test_get_logger_verbose(capture_log, verbose: bool):
 	logger = log.get_logger(logger_name, verbose=verbose)
 	min_level = logging.DEBUG if verbose else logging.WARNING
 	for level_name, level_int in logging_levels:
@@ -36,7 +36,7 @@ def test_get_logger_verbose(capture, verbose: bool):
 		for level_name, level_int in logging_levels
 		if level_int >= min_level
 	]
-	capture.check(*expected_output)
+	capture_log.check(*expected_output)
 
 
 @log_capture()

@@ -40,7 +40,7 @@ def run(
 	logging.debug('Executing \"%s\"', cmd_str)
 
 	if passable_exit_codes is None:
-		passable_exit_codes = list()
+		passable_exit_codes = []
 
 	env = os.environ.copy()
 	if custom_env is not None:
