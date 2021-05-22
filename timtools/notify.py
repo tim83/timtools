@@ -20,7 +20,7 @@ class TelegramNotify:
 	# getting the bot details
 	chat_id: int = TELEGRAM_USER_CONFIG.get("chat_id")
 	chat_user: str = TELEGRAM_USER_CONFIG.get("chat_user")
-	timeout_file_location: str = "/tmp/telegram_notifications.csv"
+	timeout_file_location: str = "/tmp/telegram_notifications.csv"  # skipcq: BAN-B108
 	timeout_file_fields: list = ["date", "text"]
 
 	def __init__(self, timeout: dt.timedelta = dt.timedelta(minutes=5)):
