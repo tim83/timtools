@@ -4,7 +4,7 @@ import datetime as dt
 import pytest
 import pandas as pd
 
-from timtools import google
+from timtools import google_api
 
 TEST_SHEET_ID = '1FdGvHITMbk_DyONFmE00IcZY79He2SWNUT35klXJu40'
 IMPORT_RANGE = 'Import Data!A1:F6'
@@ -21,13 +21,13 @@ def test_google_import_spreadsheet():
         [[""] + [f"Column {column}" for column in range(1, 6)]] + \
         [[f"Row {row}"] + [str(row * 10 + column) for column in range(1, 6)] for row in range(1, 6)]
     )
-    google_data_noheaders = google.import_spreadsheet(
+    google_data_noheaders = google_api.import_spreadsheet(
         TEST_SHEET_ID,
         IMPORT_RANGE,
         column_header=False,
         row_index=False
     )
-    google_data_headers = google.import_spreadsheet(
+    google_data_headers = google_api.import_spreadsheet(
         TEST_SHEET_ID,
         IMPORT_RANGE,
         column_header=True,
@@ -39,4 +39,4 @@ def test_google_import_spreadsheet():
 
 def test_google_modifiedDate():
     """Test the method for obtaining the modified date for a file from google drive"""
-    assert type(google.modifiedDate(TEST_SHEET_ID)) is dt.datetime
+    assert type(google_api.modifiedDate(TEST_SHEET_ID)) is dt.datetime

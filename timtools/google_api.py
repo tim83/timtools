@@ -4,36 +4,34 @@
 import datetime as dt
 import locale
 import os
-import pickle
-from typing import List
+import syslog
+from typing import Optional
 
-import google.oauth2.credentials
 import googleapiclient.discovery
 import pandas as pd
 import pytz
 from apiclient.http import MediaFileUpload
 from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 from timtools import settings
 
-SCOPES: List[str] = [
+SCOPES: list[str] = [
 	'https://www.googleapis.com/auth/spreadsheets',
 	'https://www.googleapis.com/auth/drive'
 ]
 
 
-def _obtain_credentials() -> google.oauth2.credentials.Credentials:
+def _obtain_credentials() -> Credentials:
 	"""Logs the user in and returns the credentials"""
 
-	token_file: str = os.path.join(settings.CACHE_DIR, 'google_token.pickle')
+	token_file: str = os.path.join(settings.CACHE_DIR, 'google_token.json')
 
 	# Load credentials if they exist
+	credentials: Optional[Credentials] = None
 	if os.path.exists(token_file):
-		with open(token_file, 'rb') as token:
-			credentials = pickle.load(token)  # skipcq: BAN-B301
-	else:
-		credentials = None
+		credentials = Credentials.from_authorized_user_file(token_file, SCOPES)
 
 	# If there are no (valid) credentials available, let the user log in.
 	if not credentials or not credentials.valid:
@@ -45,12 +43,14 @@ def _obtain_credentials() -> google.oauth2.credentials.Credentials:
 				SCOPES
 			)
 			credentials = flow.run_local_server(port=0)
+
 		# Save the credentials for the next run
 		token_dir: str = os.path.dirname(token_file)
 		if not os.path.exists(token_dir):
 			os.mkdir(token_dir)
-		with open(token_file, 'wb') as token:
-			pickle.dump(credentials, token)
+
+		with open(token_file, 'w') as token:
+			token.write(credentials.to_json())
 
 	return credentials
 
@@ -178,10 +178,18 @@ def modifiedDate(file_id: str) -> dt.datetime:
 
 
 if __name__ == "__main__":
+	# Refresh credentials
+	try:
+		_obtain_credentials()
+	except:
+		syslog.syslog(syslog.LOG_ERR, "De google api van timtools kan geen credentials ophalen")
+
+	# Check for functionality
 	TEST_SHEET_ID = '1FdGvHITMbk_DyONFmE00IcZY79He2SWNUT35klXJu40'
 	IMPORT_RANGE = 'Import Data!A1:F6'
 
 	md = modifiedDate(
 		TEST_SHEET_ID,
 	)
-	print(md)
+	if not isinstance(md, dt.datetime):
+		syslog.syslog(syslog.LOG_ERR, "De google api van timtools heeft gefaald")
