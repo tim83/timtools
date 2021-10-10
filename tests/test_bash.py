@@ -2,6 +2,7 @@
 """Tests the functions in bash.py related to executing bash command"""
 
 import subprocess
+
 import pytest
 
 from timtools import bash
@@ -20,7 +21,8 @@ def test_bash_run():
 	# Check output of command
 	assert bash.run(["echo", "-n", TEST_STR]) == ""
 	assert bash.run(["echo", "-n", TEST_STR], capture_stdout=True) == TEST_STR
-	assert f"TEST_ENV={TEST_STR}" in bash.run(["env"], capture_stdout=True, custom_env={"TEST_ENV": TEST_STR})
+	assert f"TEST_ENV={TEST_STR}" in bash.run(["env"], capture_stdout=True,
+		custom_env={"TEST_ENV": TEST_STR})
 	assert bash.run(["echo", "-n", TEST_STR], capture_stderr=True) == ""
 	assert bash.run(["echo", "-n", TEST_STR], capture_stderr=True) == ""
 

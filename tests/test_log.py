@@ -53,4 +53,3 @@ def test_set_verbose(capture, verbose_set: bool):
 		if level_int >= min_level
 	]
 	capture.check(*expected_output)
-
