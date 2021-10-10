@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "timtools"
-version = "0.32"
+version = "0.33"
 description = ""
 authors = ["Tim Mees <tim.mees83@gmail.com>"]
 

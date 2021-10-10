@@ -1,9 +1,16 @@
 #! /usr/bin/python3
 """Tools for running commands on the shell"""
 
+import dataclasses
 import logging
 import os
 import subprocess
+
+
+@dataclasses.dataclass
+class CommandResult:
+	output: str
+	exit_code: int
 
 
 def get_output(
@@ -14,14 +21,14 @@ def get_output(
 		custom_env: dict = None
 ) -> str:
 	"""Run a comand and return the output"""
-	output = run_bash(
+	result: CommandResult = run_bash(
 		cmd,
 		passable_exit_codes=passable_exit_codes,
 		capture_stdout=capture_stdout,
 		capture_stderr=capture_stderr,
 		custom_env=custom_env,
 	)
-	return output
+	return result.output
 
 
 def run(
@@ -30,7 +37,7 @@ def run(
 		capture_stdout: bool = False,
 		capture_stderr: bool = False,
 		custom_env: dict = None
-) -> str:
+) -> CommandResult:
 	"""Run a command"""
 	if isinstance(cmd, str):
 		cmd_str = cmd
@@ -71,7 +78,9 @@ def run(
 
 	logging.debug(log_str)
 
-	return output_str
+	result = CommandResult(output=output_str, exit_code=exitcode)
+
+	return result
 
 
 run_bash = run
