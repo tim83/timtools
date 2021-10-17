@@ -5,7 +5,7 @@ description = ""
 authors = ["Tim Mees <tim.mees83@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.7"
+python = ">=3.7.1,<4.0"
 pytest = "^6.2.5"
 testfixtures = "^6.18.3"
 DateTime = "^4.3"
