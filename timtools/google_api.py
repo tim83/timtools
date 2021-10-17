@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 """Deals with downloading en uploading data from google sheets"""
 
+from __future__ import annotations
+
 import datetime as dt
 import locale
 import os
