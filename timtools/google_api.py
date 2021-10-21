@@ -6,7 +6,6 @@ from __future__ import annotations
 import datetime as dt
 import locale
 import os
-import syslog
 from typing import Optional
 
 import googleapiclient.discovery
@@ -17,7 +16,9 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from timtools import settings
+from timtools import settings, log
+
+logger = log.get_logger(__name__)
 
 SCOPES: list[str] = [
 	'https://www.googleapis.com/auth/spreadsheets',
@@ -184,7 +185,7 @@ if __name__ == "__main__":
 	try:
 		_obtain_credentials()
 	except:
-		syslog.syslog(syslog.LOG_ERR, "De google api van timtools kan geen credentials ophalen")
+		logger.error("De google api van timtools kan geen credentials ophalen")
 
 	# Check for functionality
 	TEST_SHEET_ID = '1FdGvHITMbk_DyONFmE00IcZY79He2SWNUT35klXJu40'
@@ -194,4 +195,4 @@ if __name__ == "__main__":
 		TEST_SHEET_ID,
 	)
 	if not isinstance(md, dt.datetime):
-		syslog.syslog(syslog.LOG_ERR, "De google api van timtools heeft gefaald")
+		logger.error("De google api van timtools heeft gefaald")
