@@ -6,7 +6,6 @@ authors = ["Tim Mees <tim.mees83@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.7.1,<4.0"
-pytest = "^6.2.5"
 testfixtures = "^6.18.3"
 DateTime = "^4.3"
 pandas = ">=1.2"
@@ -21,6 +20,15 @@ google-auth-httplib2 = "^0.1.0"
 google-auth-oauthlib = "^0.4.6"
 
 [tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+flake8 = "^4.0.1"
+pep8-naming = "^0.12.1"
+isort = "^5.10.1"
+black = "^21.10b0"
+bandit = "^1.7.1"
+safety = "^1.10.3"
+pre-commit = "^2.15.0"
+flake8-bugbear = "^21.9.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

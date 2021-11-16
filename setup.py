@@ -4,21 +4,21 @@
 from setuptools import setup
 
 setup(
-	name='timtools',
-	version='0.33.3',
-	packages=['timtools'],
-	url='',
-	license='',
-	author='Tim Mees',
-	author_email='tim@mees.vip',
-	description='',
-	install_requires=[
-		"validators",
-		"python-telegram-bot",
-		"pandas",
-		"google-api-core",
-		"google-auth-httplib2",
-		"google-auth-oauthlib",
-	],
-	include_package_data=True
+    name="timtools",
+    version="0.33.3",
+    packages=["timtools"],
+    url="",
+    license="",
+    author="Tim Mees",
+    author_email="tim@mees.vip",
+    description="",
+    install_requires=[
+        "validators",
+        "python-telegram-bot",
+        "pandas",
+        "google-api-core",
+        "google-auth-httplib2",
+        "google-auth-oauthlib",
+    ],
+    include_package_data=True,
 )
