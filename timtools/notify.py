@@ -26,8 +26,11 @@ class TelegramNotify:
     )
     timeout_file_fields: list = ["date", "text"]
 
-    def __init__(self, timeout: dt.timedelta = dt.timedelta(minutes=5)):
+    def __init__(self, timeout: dt.timedelta = None):
         # initializing the bot with API
+        if timeout is None:
+            timeout = dt.timedelta(minutes=5)
+
         self.bot: Bot = Bot(TELEGRAM_USER_CONFIG.get("api_key"))
         self.timeout_window: dt.timedelta = timeout
 
