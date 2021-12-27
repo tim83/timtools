@@ -19,6 +19,7 @@ def get_output(
     capture_stdout: bool = True,
     capture_stderr: bool = False,
     custom_env: dict = None,
+    timeout: float = None,
 ) -> str:
     """Run a comand and return the output"""
     result: CommandResult = run_bash(
@@ -27,6 +28,7 @@ def get_output(
         capture_stdout=capture_stdout,
         capture_stderr=capture_stderr,
         custom_env=custom_env,
+        timeout=timeout,
     )
     return result.output
 
@@ -37,6 +39,7 @@ def run(
     capture_stdout: bool = False,
     capture_stderr: bool = False,
     custom_env: dict = None,
+    timeout: float = None,
 ) -> CommandResult:
     """Run a command"""
     if isinstance(cmd, str):
@@ -67,7 +70,7 @@ def run(
         process = subprocess.Popen(cmd, env=env)
 
     # Capture output
-    output = process.communicate()[0] or bytes()
+    output = process.communicate(timeout=timeout)[0] or bytes()
     output_str = output.decode().rstrip()
 
     # Capture exitcode

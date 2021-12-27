@@ -42,3 +42,8 @@ def test_bash_run():
 
     run_failed_expt = bash.run(["false"], passable_exit_codes=[1])
     assert run_failed_expt.output == "" and run_failed_expt.exit_code == 1
+
+
+def test_timeout():
+    with pytest.raises(subprocess.TimeoutExpired):
+        bash.run(["sleep", "5m"], timeout=1)
