@@ -994,7 +994,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7.1,<4.0"
-content-hash = "36e22b41edca4364bafc8361782d4eea1a2ad33a4bb011435b4d5415bded5221"
+content-hash = "edb21d0b2a69cb0c4a7ab7398eb3f622226811ac084a027e3dc68d0225fed0d9"
 
 [metadata.files]
 apscheduler = [
