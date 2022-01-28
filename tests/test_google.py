@@ -14,7 +14,7 @@ _ = pytest.__version__  # make sure to use pytest
 
 
 def test_google_import_spreadsheet():
-    """Test the models to import data from google sheets"""
+    """Test the models to import data from Google sheets"""
     correct_data_headers = pd.DataFrame(
         [[str(row * 10 + column) for column in range(1, 6)] for row in range(1, 6)],
         columns=[f"Column {column}" for column in range(1, 6)],
@@ -38,6 +38,5 @@ def test_google_import_spreadsheet():
 
 
 def test_google_modified_date():
-    """Test the method for obtaining the modified date for a file from google
-    drive"""
+    """Test the method for obtaining the modified date for a file from Google Drive"""
     assert type(google_api.modified_date(TEST_SHEET_ID)) is dt.datetime
