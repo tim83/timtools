@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="timtools",
-    version="0.35.0",
+    version="0.35.1",
     packages=["timtools"],
     url="",
     license="",
@@ -15,7 +15,6 @@ setup(
     install_requires=[
         "validators",
         "python-telegram-bot",
-        "pandas",
         "google-api-core",
         "google-auth-httplib2",
         "google-auth-oauthlib",
