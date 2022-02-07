@@ -5,7 +5,7 @@ description = ""
 authors = ["Tim Mees <tim.mees83@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.7.1,<4.0"
+python = ">=3.8,<4.0"
 testfixtures = "^6.18.3"
 DateTime = "^4.3"
 pytz = "^2021.3"
@@ -16,6 +16,7 @@ python-telegram-bot = "^13.7"
 google-api-core = "^2.1.0"
 google-auth-httplib2 = "^0.1.0"
 google-auth-oauthlib = "^0.4.6"
+pandas = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
