@@ -3,16 +3,17 @@
 
 import csv
 import datetime as dt
-import os
+import typing
+from pathlib import Path
 
 import validators
 from telegram import Bot
 
-from timtools import log, settings
+import timtools.settings
 
-logger = log.get_logger(__name__)
+logger = timtools.log.get_logger(__name__)
 
-TELEGRAM_USER_CONFIG = settings.USER_CONFIG["telegram"]
+TELEGRAM_USER_CONFIG = timtools.settings.USER_CONFIG["telegram"]
 
 
 class TelegramNotify:
@@ -21,8 +22,8 @@ class TelegramNotify:
     # getting the bot details
     chat_id: int = TELEGRAM_USER_CONFIG.get("chat_id")
     chat_user: str = TELEGRAM_USER_CONFIG.get("chat_user")
-    timeout_file_location: str = os.path.expanduser(
-        "~/.cache/telegram_notifications.csv"
+    timeout_file_location: Path = (
+        timtools.settings.CACHE_DIR / "telegram_notifications.csv"
     )
     timeout_file_fields: list = ["date", "text"]
 
@@ -41,7 +42,7 @@ class TelegramNotify:
             self.bot.send_message(self.chat_id, text)
             self._log_notification(text)
 
-    def send_image(self, location: str):
+    def send_image(self, location: typing.Union[str, Path]):
         """Sends an image"""
         logger.info("Sending location to %s: %s", self.chat_user, location)
         if not self._is_timedout(location):
@@ -51,7 +52,7 @@ class TelegramNotify:
                 self.bot.send_photo(self.chat_id, open(location, "rb"))
             self._log_notification(location)
 
-    def send_file(self, location: str):
+    def send_file(self, location: typing.Union[str, Path]):
         """Sends a file"""
         logger.info(
             'Sending "%(location)s" to %(user)s: %(location)s',
@@ -60,7 +61,7 @@ class TelegramNotify:
         )
         if not self._is_timedout(location):
             if self._is_url(location):
-                self.bot.send_document(self.chat_id, location)
+                self.bot.send_document(self.chat_id, str(location))
             else:
                 self.bot.send_document(self.chat_id, open(location, "rb"))
             self._log_notification(location)
@@ -70,7 +71,10 @@ class TelegramNotify:
         return validators.url(location)
 
     def _is_timedout(self, text) -> bool:
-        if os.path.exists(self.timeout_file_location):
+        if self.timeout_file_location.exists():
+            if isinstance(text, Path):
+                text = str(text.absolute())
+
             with open(self.timeout_file_location, "r", newline="") as timeout_file:
                 timeout_file_reader = csv.DictReader(timeout_file)
                 for row in timeout_file_reader:
@@ -85,7 +89,10 @@ class TelegramNotify:
                         return True
         return False
 
-    def _log_notification(self, text: str):
+    def _log_notification(self, text):
+        if isinstance(text, Path):
+            text = str(text.absolute())
+
         with open(self.timeout_file_location, "w", newline="") as timeout_file:
             timeout_file_writer = csv.DictWriter(
                 timeout_file, fieldnames=self.timeout_file_fields

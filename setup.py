@@ -5,19 +5,13 @@ from setuptools import setup
 
 setup(
     name="timtools",
-    version="0.35.1",
+    version="1.0.0",
     packages=["timtools"],
     url="",
     license="",
     author="Tim Mees",
     author_email="tim@mees.vip",
     description="",
-    install_requires=[
-        "validators",
-        "python-telegram-bot",
-        "google-api-core",
-        "google-auth-httplib2",
-        "google-auth-oauthlib",
-    ],
+    install_requires=["validators", "python-telegram-bot"],
     include_package_data=True,
 )
