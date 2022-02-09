@@ -4,8 +4,8 @@ from pathlib import Path
 import xdg
 
 PROJECT_DIR: Path = Path(__file__).parent
-CACHE_DIR: Path = xdg.XDG_CACHE_HOME / "timtools"
-CONFIG_DIR: Path = xdg.XDG_CONFIG_HOME / "timtools"
+CACHE_DIR: Path = xdg.xdg_cache_home() / "timtools"
+CONFIG_DIR: Path = xdg.xdg_config_home() / "timtools"
 if not CONFIG_DIR.is_dir():
     code_src_config_dir: Path = PROJECT_DIR / "tim_config"
     if code_src_config_dir.is_dir():
