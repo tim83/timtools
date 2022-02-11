@@ -7,13 +7,15 @@ import sys
 import typing
 from pathlib import Path
 
+import xdg
+
 user: str = os.environ.get("USER", "NEMO")
 
 
 class LogConfig:
     """Configuration for logging"""
 
-    logfile: str = os.path.expanduser(f"~/.cache/python_{user}.log")
+    logfile: Path = xdg.xdg_cache_home() / f"python_{user}.log"
     steam_format: str = "%(name)s (%(lineno)d): %(message)s"
     file_format: str = (
         "%(asctime)s - %(levelname)s - %(name)s (%(lineno)d): %(message)s"
