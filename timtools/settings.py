@@ -8,6 +8,9 @@ CACHE_DIR: Path = xdg.xdg_cache_home() / "timtools"
 CONFIG_DIR: Path = xdg.xdg_config_home() / "timtools"
 if not CONFIG_DIR.is_dir():
     code_src_config_dir: Path = PROJECT_DIR / "tim_config"
+    if not code_src_config_dir.is_dir():
+        code_src_config_dir = Path("/home/tim/Programs/python/timtools/tim_config")
+
     if code_src_config_dir.is_dir():
         CONFIG_DIR = code_src_config_dir
 
