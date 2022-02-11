@@ -63,6 +63,12 @@ def set_verbose(verbose: bool, logger: logging.Logger = None) -> None:
 
 def _get_file_handler(filename: typing.Union[str, Path]) -> logging.FileHandler:
     """Returns a filehandles"""
+    if isinstance(filename, str):
+        filename = Path(filename)
+
+    if not filename.parent.is_dir():
+        filename.parent.mkdir()
+
     file_handler = logging.FileHandler(filename)
     formatter = logging.Formatter(LogConfig.file_format)
     file_handler.setFormatter(formatter)

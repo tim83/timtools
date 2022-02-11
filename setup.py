@@ -5,9 +5,9 @@ from setuptools import setup
 
 setup(
     name="timtools",
-    version="1.0.2",
+    version="1.0.3",
     packages=["timtools"],
-    url="",
+    url="https://github.com/tim83/timtools",
     license="",
     author="Tim Mees",
     author_email="tim@mees.vip",
