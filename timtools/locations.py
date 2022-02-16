@@ -11,7 +11,9 @@ def _is_current_user(user: str = None) -> bool:
 
 
 def _use_xdg(user: str = None) -> bool:
-    return _is_current_user(user)
+    return _is_current_user(user) and any(
+        filter(lambda d: not d.startswith("_"), dir(xdg))
+    )
 
 
 def get_user_home(user: str = None) -> Path:
