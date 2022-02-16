@@ -1,5 +1,4 @@
-#! /usr/bin/python3
-"""Tools for logging"""
+from __future__ import annotations  # python -3.9 compatibility
 
 import logging
 import os
@@ -7,7 +6,7 @@ import sys
 import typing
 from pathlib import Path
 
-import xdg
+import timtools.locations
 
 user: str = os.environ.get("USER", "NEMO")
 
@@ -15,7 +14,7 @@ user: str = os.environ.get("USER", "NEMO")
 class LogConfig:
     """Configuration for logging"""
 
-    logfile: Path = xdg.xdg_cache_home() / f"python_{user}.log"
+    logfile: Path = timtools.locations.get_user_cache_dir() / f"python_{user}.log"
     steam_format: str = "%(name)s (%(lineno)d): %(message)s"
     file_format: str = (
         "%(asctime)s - %(levelname)s - %(name)s (%(lineno)d): %(message)s"

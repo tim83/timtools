@@ -1,14 +1,14 @@
 import configparser
 from pathlib import Path
 
-import xdg
+import timtools.locations
 
 PROJECT_DIR: Path = Path(__file__).parent
-CACHE_DIR: Path = xdg.xdg_cache_home() / "timtools"
+CACHE_DIR: Path = timtools.locations.get_user_cache_dir() / "timtools"
 if not CACHE_DIR.is_dir():
     CACHE_DIR.mkdir()
 
-CONFIG_DIR: Path = xdg.xdg_config_home() / "timtools"
+CONFIG_DIR: Path = timtools.locations.get_user_config_dir() / "timtools"
 if not CONFIG_DIR.is_dir():
     code_src_config_dir: Path = PROJECT_DIR / "tim_config"
     if not code_src_config_dir.is_dir():

@@ -1,5 +1,4 @@
-#! /usr/bin/python3
-"""Module for telegram notifications"""
+from __future__ import annotations  # python -3.9 compatibility
 
 import csv
 import datetime as dt
