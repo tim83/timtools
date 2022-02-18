@@ -12,7 +12,6 @@ import timtools.settings
 
 logger = timtools.log.get_logger(__name__)
 
-TELEGRAM_USER_CONFIG = timtools.settings.USER_CONFIG["telegram"]
 DEFAULT_TIMEOUT: dt.timedelta = dt.timedelta(minutes=5)
 
 
@@ -20,8 +19,8 @@ class TelegramNotify:
     """Class for sending telegram notifications"""
 
     # getting the bot details
-    chat_id: int = TELEGRAM_USER_CONFIG.get("chat_id")
-    chat_user: str = TELEGRAM_USER_CONFIG.get("chat_user")
+    chat_id: int
+    chat_user: str
     timeout_file_location: Path = (
         timtools.settings.CACHE_DIR / "telegram_notifications.csv"
     )
@@ -33,7 +32,10 @@ class TelegramNotify:
         if timeout_window is None:
             timeout_window = DEFAULT_TIMEOUT
 
-        self.bot: Bot = Bot(TELEGRAM_USER_CONFIG.get("api_key"))
+        self.telegram_config = timtools.settings.USER_CONFIG["telegram"]
+        self.chat_id = int(self.telegram_config.get("chat_id"))
+        self.chat_user = self.telegram_config.get("chat_user")
+        self.bot: Bot = Bot(self.telegram_config.get("api_key"))
         self.timeout_window = timeout_window
 
     def send_text(self, text: str):
