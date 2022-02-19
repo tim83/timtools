@@ -23,7 +23,18 @@ safety = "^1.10.3"
 pre-commit = "^2.15.0"
 flake8-bugbear = "^21.9.2"
 testfixtures = "^6.18.3"
+flake8-docstrings = "^1.6.0"
+darglint = "^1.8.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.semantic_release]
+version_variable = [
+    "pyproject.toml:version"
+]
+branch = "master"
+upload_to_pypi = false
+upload_to_release = true
+build_command = "pip install poetry && poetry build"

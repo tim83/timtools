@@ -1,11 +1,19 @@
 #! /usr/bin/python3
 """Manager for the python package"""
 
+from pathlib import Path
+
+import toml
 from setuptools import setup
+
+pyproject_path = Path(__file__).parent / "pyproject.toml"
+with open(pyproject_path, "r") as fobj:
+    toml_str = fobj.read()
+    parsed_toml = toml.loads(toml_str)
 
 setup(
     name="timtools",
-    version="1.1.1",
+    version=parsed_toml["tool"]["poetry"]["version"],
     packages=["timtools"],
     url="https://github.com/tim83/timtools",
     license="",
