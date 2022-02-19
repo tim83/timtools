@@ -21,21 +21,26 @@ class TelegramNotify:
     # getting the bot details
     chat_id: int
     chat_user: str
+    bot: Bot
     timeout_file_location: Path = (
         timtools.settings.CACHE_DIR / "telegram_notifications.csv"
     )
     timeout_file_fields: list = ["date", "text"]
-    timeout_windows: dt.timedelta
+    timeout_window: dt.timedelta = DEFAULT_TIMEOUT
 
     def __init__(self, timeout_window: dt.timedelta = None):
         # initializing the bot with API
         if timeout_window is None:
             timeout_window = DEFAULT_TIMEOUT
 
-        self.telegram_config = timtools.settings.USER_CONFIG["telegram"]
-        self.chat_id = int(self.telegram_config.get("chat_id"))
-        self.chat_user = self.telegram_config.get("chat_user")
-        self.bot: Bot = Bot(self.telegram_config.get("api_key"))
+        if "telegram" not in timtools.settings.USER_CONFIG.keys():
+            raise ValueError("No config for telegram found for this user.")
+
+        telegram_config = timtools.settings.USER_CONFIG["telegram"]
+        self.chat_id = int(telegram_config.get("chat_id"))
+        self.chat_user = telegram_config.get("chat_user")
+        self.bot = Bot(telegram_config.get("api_key"))
+
         self.timeout_window = timeout_window
 
     def send_text(self, text: str):
@@ -57,11 +62,7 @@ class TelegramNotify:
 
     def send_file(self, location: typing.Union[str, Path]):
         """Sends a file"""
-        logger.info(
-            'Sending "%(location)s" to %(user)s: %(location)s',
-            location=location,
-            user=self.chat_user,
-        )
+        logger.info("Sending file to %s: %s", location, self.chat_user)
         if not self._is_timedout(location):
             if self._is_url(location):
                 self.bot.send_document(self.chat_id, str(location))
@@ -92,13 +93,14 @@ class TelegramNotify:
                         return True
         return False
 
-    def _log_notification(self, text):
+    @classmethod
+    def _log_notification(cls, text):
         if isinstance(text, Path):
             text = str(text.absolute())
 
-        with open(self.timeout_file_location, "w", newline="") as timeout_file:
+        with open(cls.timeout_file_location, "w", newline="") as timeout_file:
             timeout_file_writer = csv.DictWriter(
-                timeout_file, fieldnames=self.timeout_file_fields
+                timeout_file, fieldnames=cls.timeout_file_fields
             )
             timeout_file_writer.writeheader()
             timeout_file_writer.writerow(
