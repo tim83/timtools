@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.2.1 (2022-03-01)
+### Fix
+* **__init__.py:** Prevent circular import ([`b229b58`](https://github.com/tim83/timtools/commit/b229b58b422455bfc4ce7573b9bc111227f5b688))
+
 ## v1.2.0 (2022-02-19)
 ### Feature
 * Add automated CI ([`f2e555e`](https://github.com/tim83/timtools/commit/f2e555ebcfbaea425438262737cc8c3e072ba8aa))
