@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.0 (2022-03-17)
+### Feature
+* Use pylint ([`25beabb`](https://github.com/tim83/timtools/commit/25beabb647adbcf03da7ca586bc054e4f31e8c29))
+
+### Fix
+* **ci.yml:** Typo ([`570c1bd`](https://github.com/tim83/timtools/commit/570c1bddc0d9ea32062d4510b102a70b771f07db))
+
 ## v1.2.1 (2022-03-01)
 ### Fix
 * **__init__.py:** Prevent circular import ([`b229b58`](https://github.com/tim83/timtools/commit/b229b58b422455bfc4ce7573b9bc111227f5b688))
