@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.1 (2022-03-17)
+### Fix
+* **bash.py:** Fix timeout by not using with ([`af8a0e2`](https://github.com/tim83/timtools/commit/af8a0e206565c2da59fe33c34ae34a9aa1872c86))
+
 ## v1.3.0 (2022-03-17)
 ### Feature
 * Use pylint ([`25beabb`](https://github.com/tim83/timtools/commit/25beabb647adbcf03da7ca586bc054e4f31e8c29))
