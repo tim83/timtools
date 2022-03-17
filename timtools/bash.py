@@ -69,13 +69,14 @@ def run(  # pylint: disable=too-many-arguments
     else:
         stdargs = {}
 
-    with subprocess.Popen(cmd, env=env, **stdargs) as process:
-        # Capture output
-        output = process.communicate(timeout=timeout)[0] or bytes()
-        output_str = output.decode().rstrip()
+    # with subprocess.Popen(cmd, env=env, **stdargs) as process:
+    process = subprocess.Popen(  # pylint: disable=consider-using-with
+        cmd, env=env, **stdargs
+    )
+    output = process.communicate(timeout=timeout)[0] or bytes()
+    exitcode = process.returncode
 
-        # Capture exitcode
-        exitcode = process.returncode
+    output_str = output.decode().rstrip()
 
     # Log execution and raise error in case of failure
     if exitcode not in [0] + passable_exit_codes and "*" not in passable_exit_codes:

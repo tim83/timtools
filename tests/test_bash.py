@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 """Tests the functions in bash.py related to executing bash command"""
 
+import datetime as dt
 import subprocess
 
 import pytest
@@ -45,5 +46,9 @@ def test_bash_run():
 
 
 def test_timeout():
+    start = dt.datetime.now()
     with pytest.raises(subprocess.TimeoutExpired):
         bash.run(["sleep", "5s"], timeout=1)
+    end = dt.datetime.now()
+    process_time = end - start
+    assert process_time.total_seconds() < 2
