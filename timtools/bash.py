@@ -9,11 +9,13 @@ import subprocess
 
 @dataclasses.dataclass
 class CommandResult:
+    """Dataclass for storing the result of a command run"""
+
     output: str
     exit_code: int
 
 
-def get_output(
+def get_output(  # pylint: disable=too-many-arguments
     cmd: list,
     passable_exit_codes: list = None,
     capture_stdout: bool = True,
@@ -21,7 +23,7 @@ def get_output(
     custom_env: dict = None,
     timeout: float = None,
 ) -> str:
-    """Run a comand and return the output"""
+    """Run a command and return the output"""
     result: CommandResult = run_bash(
         cmd,
         passable_exit_codes=passable_exit_codes,
@@ -33,7 +35,7 @@ def get_output(
     return result.output
 
 
-def run(
+def run(  # pylint: disable=too-many-arguments
     cmd: (list, str),
     passable_exit_codes: list = None,
     capture_stdout: bool = False,
@@ -42,11 +44,10 @@ def run(
     timeout: float = None,
 ) -> CommandResult:
     """Run a command"""
+    cmd: list[str]
     if isinstance(cmd, str):
-        cmd_str = cmd
         cmd = cmd.split()
-    else:
-        cmd_str: str = '"' + '" "'.join(cmd) + '"'
+    cmd_str = " ".join(cmd)
     logging.debug('Executing "%s"', cmd_str)
 
     if passable_exit_codes is None:
@@ -57,31 +58,30 @@ def run(
         for key in custom_env.keys():
             env[key] = custom_env[key]
 
-    # Execute command and redirect output
+    # Execute command and redirect
+    stdargs: dict[str]
     if capture_stdout and capture_stderr:
-        process = subprocess.Popen(
-            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env
-        )
+        stdargs = {"stdout": subprocess.PIPE, "stderr": subprocess.PIPE}
     elif capture_stdout and not capture_stderr:
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, env=env)
+        stdargs = {"stdout": subprocess.PIPE}
     elif not capture_stdout and capture_stderr:
-        process = subprocess.Popen(cmd, stderr=subprocess.PIPE, env=env)
+        stdargs = {"stderr": subprocess.PIPE}
     else:
-        process = subprocess.Popen(cmd, env=env)
+        stdargs = {}
 
-    # Capture output
-    output = process.communicate(timeout=timeout)[0] or bytes()
-    output_str = output.decode().rstrip()
+    with subprocess.Popen(cmd, env=env, **stdargs) as process:
+        # Capture output
+        output = process.communicate(timeout=timeout)[0] or bytes()
+        output_str = output.decode().rstrip()
 
-    # Capture exitcode
-    exitcode = process.returncode
+        # Capture exitcode
+        exitcode = process.returncode
 
     # Log execution and raise error in case of failure
-    log_str = f'"{cmd_str}" has exited with code {exitcode}: {output_str}'
     if exitcode not in [0] + passable_exit_codes and "*" not in passable_exit_codes:
         raise subprocess.CalledProcessError(exitcode, cmd_str, output=output_str)
 
-    logging.debug(log_str)
+    logging.debug('"%s" has exited with code %s: %s', cmd_str, exitcode, output_str)
 
     result = CommandResult(output=output_str, exit_code=exitcode)
 

@@ -1,3 +1,4 @@
+"""Module containing tools for sending telegram messages"""
 from __future__ import annotations  # python -3.9 compatibility
 
 import csv
@@ -57,7 +58,8 @@ class TelegramNotify:
             if self._is_url(location):
                 self.bot.send_photo(self.chat_id, location)
             else:
-                self.bot.send_photo(self.chat_id, open(location, "rb"))
+                with open(location, "rb") as location_obj:
+                    self.bot.send_photo(self.chat_id, location_obj)
             self._log_notification(location)
 
     def send_file(self, location: typing.Union[str, Path]):
@@ -67,7 +69,8 @@ class TelegramNotify:
             if self._is_url(location):
                 self.bot.send_document(self.chat_id, str(location))
             else:
-                self.bot.send_document(self.chat_id, open(location, "rb"))
+                with open(location, "rb") as location_obj:
+                    self.bot.send_document(self.chat_id, location_obj)
             self._log_notification(location)
 
     @staticmethod
@@ -79,7 +82,9 @@ class TelegramNotify:
             if isinstance(text, Path):
                 text = str(text.absolute())
 
-            with open(self.timeout_file_location, "r", newline="") as timeout_file:
+            with open(
+                self.timeout_file_location, "r", newline="", encoding="utf-8"
+            ) as timeout_file:
                 timeout_file_reader = csv.DictReader(timeout_file)
                 for row in timeout_file_reader:
                     epoch = float(row["date"])
@@ -98,7 +103,9 @@ class TelegramNotify:
         if isinstance(text, Path):
             text = str(text.absolute())
 
-        with open(cls.timeout_file_location, "w", newline="") as timeout_file:
+        with open(
+            cls.timeout_file_location, "w", newline="", encoding="utf-8"
+        ) as timeout_file:
             timeout_file_writer = csv.DictWriter(
                 timeout_file, fieldnames=cls.timeout_file_fields
             )

@@ -1,3 +1,4 @@
+"""Module that wraps the logging module"""
 from __future__ import annotations  # python -3.9 compatibility
 
 import logging
@@ -61,7 +62,11 @@ def set_verbose(verbose: bool, logger: logging.Logger = None) -> None:
 
 
 def _get_file_handler(filename: typing.Union[str, Path]) -> logging.FileHandler:
-    """Returns a filehandles"""
+    """
+    Returns the filehandles
+    :param filename: A string or Path of the file that the logger will write to
+    :return: The filehandler for the logger
+    """
     if isinstance(filename, str):
         filename = Path(filename)
 

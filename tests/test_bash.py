@@ -46,4 +46,4 @@ def test_bash_run():
 
 def test_timeout():
     with pytest.raises(subprocess.TimeoutExpired):
-        bash.run(["sleep", "5m"], timeout=1)
+        bash.run(["sleep", "5s"], timeout=1)

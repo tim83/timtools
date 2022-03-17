@@ -1,3 +1,5 @@
+"""Module containing the setting to be used for the package"""
+
 import configparser
 from pathlib import Path
 
