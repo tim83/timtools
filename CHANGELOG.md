@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.2 (2022-03-26)
+### Fix
+* Limit to python3.8 ([`48c49f8`](https://github.com/tim83/timtools/commit/48c49f8874b2e042991432ed090e26b055e3f067))
+* Allow python 3.6 ([`f6bccca`](https://github.com/tim83/timtools/commit/f6bcccabad3c3866b60656ae80564cda85437633))
+
 ## v1.3.1 (2022-03-17)
 ### Fix
 * **bash.py:** Fix timeout by not using with ([`af8a0e2`](https://github.com/tim83/timtools/commit/af8a0e206565c2da59fe33c34ae34a9aa1872c86))
