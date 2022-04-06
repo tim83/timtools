@@ -46,7 +46,7 @@ def get_user_cache_dir(user: str = None) -> Path:
     :return: A path of the user's cache directory
     """
     if _use_xdg(user):
-        return xdg.xdg_cache_home()
+        return xdg.xdg_cache_home()  # pylint: disable=no-member
 
     return get_user_home(user) / ".cache"
 
@@ -58,5 +58,5 @@ def get_user_config_dir(user: str = None) -> Path:
     :return: A path of the user's configuration directory
     """
     if _use_xdg(user):
-        return xdg.xdg_config_home()
+        return xdg.xdg_config_home()  # pylint: disable=no-member
     return get_user_home(user) / ".config"
