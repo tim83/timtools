@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.3 (2022-04-06)
+### Fix
+* **locations.py): Make pylint happy\nfix(.pre-commit-config.yml:** Update flake8 and disable unit tests on commit ([`bc4060b`](https://github.com/tim83/timtools/commit/bc4060be4cd1895e2b78005d6c67de80a1a7da01))
+
 ## v1.3.2 (2022-03-26)
 ### Fix
 * Limit to python3.8 ([`48c49f8`](https://github.com/tim83/timtools/commit/48c49f8874b2e042991432ed090e26b055e3f067))
