@@ -65,6 +65,9 @@ class TelegramNotify:
     def send_file(self, location: typing.Union[str, Path]):
         """Sends a file"""
         logger.info("Sending file to %s: %s", location, self.chat_user)
+        if isinstance(location, Path):
+            location: str = str(location)
+
         if not self._is_timedout(location):
             if self._is_url(location):
                 self.bot.send_document(self.chat_id, str(location))
