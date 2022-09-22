@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.4.0 (2022-09-22)
+### Feature
+* **notify.py:** Add commandline interface for notify ([`19521d8`](https://github.com/tim83/timtools/commit/19521d89948be110a9918dae141dcff6963804a4))
+
 ## v1.3.5 (2022-09-22)
 ### Fix
 * **notify.py:** Fix missing import for logger ([`044b36b`](https://github.com/tim83/timtools/commit/044b36bcba118514b0541a5ce4d11b5bb5400d60))
