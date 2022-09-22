@@ -94,7 +94,7 @@ class TelegramNotify:
                     window = dt.datetime.now() - dt.datetime.fromtimestamp(epoch)
                     if row["text"] == text and window < self.timeout_window:
                         logger.warning(
-                            'Notification with text "%s" was send %d seconds ' "ago",
+                            'Notification with text "%s" was send %d seconds ago',
                             text,
                             window.total_seconds(),
                         )
