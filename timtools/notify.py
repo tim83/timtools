@@ -117,3 +117,27 @@ class TelegramNotify:
             timeout_file_writer.writerow(
                 {"date": dt.datetime.now().timestamp(), "text": text}
             )
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--text", help="Verstuur een tekst bericht")
+    parser.add_argument("-i", "--image", help="Verstuur een afbeelding")
+    parser.add_argument("-f", "--file", help="Verstuur een bestand")
+    parser.add_argument("-v", "--verbose", action="store_true")
+    args = parser.parse_args()
+
+    timtools.log.set_verbose(args.verbose)
+
+    if not any((args.text, args.image, args.file)):
+        raise ValueError("Er moet minstens 1 berichttype gespecifierd worden")
+
+    tn = TelegramNotify()
+    if args.text:
+        tn.send_text(args.text)
+    if args.image:
+        tn.send_image(args.image)
+    if args.file:
+        tn.send_file(args.file)
