@@ -9,6 +9,7 @@ from pathlib import Path
 import validators
 from telegram import Bot
 
+import timtools.log
 import timtools.settings
 
 logger = timtools.log.get_logger(__name__)
