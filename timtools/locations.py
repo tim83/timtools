@@ -54,7 +54,8 @@ def get_user_cache_dir(user: str = None) -> Path:
 def get_user_config_dir(user: str = None) -> Path:
     """
     Returns the configuration directory for a user
-    :param user: The username whose configuration directory is needed, defaults to the current user
+    :param user: The username whose configuration directory is needed,
+     defaults to the current user
     :return: A path of the user's configuration directory
     """
     if _use_xdg(user):
