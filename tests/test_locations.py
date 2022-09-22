@@ -16,8 +16,14 @@ def test_get_user_home():
 
 
 def test_get_user_cache_dir():
-    assert timtools.locations.get_user_cache_dir("tim") == Path("/home/tim/.cache")
+    tim_cache = timtools.locations.get_user_cache_dir("tim")
+    assert isinstance(tim_cache, Path)
+    assert str(tim_cache).startswith("/home/tim")
+    assert str(tim_cache).endswith("cache")
 
 
 def test_get_user_config_dir():
-    assert timtools.locations.get_user_config_dir("tim") == Path("/home/tim/.config")
+    tim_config = timtools.locations.get_user_config_dir("tim")
+    assert isinstance(tim_config, Path)
+    assert str(tim_config).startswith("/home/tim")
+    assert str(tim_config).endswith("config")
