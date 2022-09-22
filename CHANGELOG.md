@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.4 (2022-05-17)
+### Fix
+* **notify.py:** Fix use of Path objects for sending files over telegram ([`28594ed`](https://github.com/tim83/timtools/commit/28594ed7a217b2de9635a17cff85f5c6b25f1057))
+
 ## v1.3.3 (2022-04-06)
 ### Fix
 * **locations.py): Make pylint happy\nfix(.pre-commit-config.yml:** Update flake8 and disable unit tests on commit ([`bc4060b`](https://github.com/tim83/timtools/commit/bc4060be4cd1895e2b78005d6c67de80a1a7da01))
