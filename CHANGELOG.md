@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v1.3.5 (2022-09-22)
+### Fix
+* **notify.py:** Fix missing import for logger ([`044b36b`](https://github.com/tim83/timtools/commit/044b36bcba118514b0541a5ce4d11b5bb5400d60))
+* **notify.py:** Fix bad quotes ([`86bf26a`](https://github.com/tim83/timtools/commit/86bf26a4610f3998bea52850e3a3cd27811e8bdf))
+
 ## v1.3.4 (2022-05-17)
 ### Fix
 * **notify.py:** Fix use of Path objects for sending files over telegram ([`28594ed`](https://github.com/tim83/timtools/commit/28594ed7a217b2de9635a17cff85f5c6b25f1057))
