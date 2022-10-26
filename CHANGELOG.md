@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.5.0 (2022-10-26)
+### Feature
+* **settings.py:** Allow using global config ([`c6ebc02`](https://github.com/tim83/timtools/commit/c6ebc02968d81e22cb9a4ee5e42fdc840f788b7d))
+
 ## v1.4.0 (2022-09-22)
 ### Feature
 * **notify.py:** Add commandline interface for notify ([`19521d8`](https://github.com/tim83/timtools/commit/19521d89948be110a9918dae141dcff6963804a4))
