@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/timtools.egg-info" />
       <excludeFolder url="file://$MODULE_DIR$/.pytest_cache" />
       <excludeFolder url="file://$MODULE_DIR$/tim_config" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint" />
     </content>
     <orderEntry type="jdk" jdkName="Poetry (timtools)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
