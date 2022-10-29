@@ -17,7 +17,7 @@ possible_config_dirs = (
     PROJECT_DIR / "tim_config",  # package config
 )
 if not any(path.is_dir() for path in possible_config_dirs):
-    raise FileNotFoundError("No possible config locations found")
+    print("No existing config locations where found")
 
 possible_config_files: list[Path] = [
     path / "timtools.ini" for path in possible_config_dirs
