@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.6.0 (2022-10-29)
+### Feature
+* **settings.py:** Allow checking multiple config files ([`8348d84`](https://github.com/tim83/timtools/commit/8348d84e2760704e1e9d2a9856ee2f64bf0a5456))
+
 ## v1.5.0 (2022-10-26)
 ### Feature
 * **settings.py:** Allow using global config ([`c6ebc02`](https://github.com/tim83/timtools/commit/c6ebc02968d81e22cb9a4ee5e42fdc840f788b7d))
