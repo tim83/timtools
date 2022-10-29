@@ -11,17 +11,17 @@ if not CACHE_DIR.is_dir():
     CACHE_DIR.mkdir()
 
 CONFIG_DIR: Path
-user_config_dir = timtools.locations.get_user_config_dir() / "timtools"
-global_config_dir = Path("/etc/timtools")
-if not user_config_dir.is_dir():
-    CONFIG_DIR = user_config_dir
-elif global_config_dir.is_dir():
-    CONFIG_DIR = global_config_dir
-else:
-    code_src_config_dir: Path = PROJECT_DIR / "tim_config"
-    CONFIG_DIR = code_src_config_dir
+possible_config_dirs = (
+    timtools.locations.get_user_config_dir() / "timtools",  # user config
+    Path("/etc/timtools"),  # global config
+    PROJECT_DIR / "tim_config",  # package config
+)
+if not any(path.is_dir() for path in possible_config_dirs):
+    raise FileNotFoundError("No possible config locations found")
 
-CONFIG_FILE: Path = CONFIG_DIR / "timtools.ini"
+possible_config_files: list[Path] = [
+    path / "timtools.ini" for path in possible_config_dirs
+]
 
 USER_CONFIG: configparser.ConfigParser = configparser.ConfigParser()
-USER_CONFIG.read(CONFIG_FILE)
+USER_CONFIG.read(possible_config_files)
