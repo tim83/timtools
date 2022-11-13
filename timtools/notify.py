@@ -6,8 +6,8 @@ import datetime as dt
 import typing
 from pathlib import Path
 
+import telegram
 import validators
-from telegram import Bot
 
 import timtools.log
 import timtools.settings
@@ -23,7 +23,8 @@ class TelegramNotify:
     # getting the bot details
     chat_id: int
     chat_user: str
-    bot: Bot
+    api_key: str
+    _bot_instance: telegram.Bot = None
     timeout_file_location: Path = (
         timtools.settings.CACHE_DIR / "telegram_notifications.csv"
     )
@@ -41,9 +42,19 @@ class TelegramNotify:
         telegram_config = timtools.settings.USER_CONFIG["telegram"]
         self.chat_id = int(telegram_config.get("chat_id"))
         self.chat_user = telegram_config.get("chat_user")
-        self.bot = Bot(telegram_config.get("api_key"))
+        self.api_key = telegram_config.get("api_key")
 
         self.timeout_window = timeout_window
+
+    @property
+    def bot(self) -> telegram.Bot:
+        """
+        Returns the telegram bot instance.
+        If there was already an instance created, that instance will be returned
+        """
+        if self._bot_instance is None:
+            self._bot_instance = telegram.Bot(self.api_key)
+        return self._bot_instance
 
     def send_text(self, text: str):
         """Sends a text message"""
