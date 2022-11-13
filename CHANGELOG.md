@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.6.2 (2022-11-13)
+### Fix
+* **settings.py:** Fix dummy tests and add tests for it ([`d5b6789`](https://github.com/tim83/timtools/commit/d5b6789e61285375af277fc898e4b7851abcbd82))
+
 ## v1.6.1 (2022-11-13)
 ### Fix
 * **settings.py:** Allow programs to use a dummy config in tests ([`4ca3b21`](https://github.com/tim83/timtools/commit/4ca3b21ba9f6707dae4cb06052d3cf59e64f357d))
