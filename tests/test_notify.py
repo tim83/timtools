@@ -7,13 +7,6 @@ import pytest
 import timtools.notify
 import timtools.settings
 
-# override settings
-test_telegram_config = {
-    "chat_id": "12345",
-    "chat_user": "test",
-    "api_key": "ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
-}
-
 
 def test_no_config():
     if "telegram" in timtools.settings.USER_CONFIG:
@@ -23,7 +16,7 @@ def test_no_config():
 
 
 def test_single_instance_timeout():
-    timtools.settings.USER_CONFIG["telegram"] = test_telegram_config
+    timtools.settings.replace_config_with_dummy()
     timtools.notify.DEFAULT_TIMEOUT = dt.timedelta(milliseconds=500)
     notification_msg = f"TEST -- {uuid.uuid4()}"
     timtools.notify.Bot = lambda api: api
@@ -36,7 +29,7 @@ def test_single_instance_timeout():
 
 
 def test_cross_instance_timeout():
-    timtools.settings.USER_CONFIG["telegram"] = test_telegram_config
+    timtools.settings.replace_config_with_dummy()
     timtools.notify.DEFAULT_TIMEOUT = dt.timedelta(milliseconds=500)
     notification_msg = f"TEST -- {uuid.uuid4()}"
     timtools.notify.Bot = lambda api: api

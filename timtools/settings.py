@@ -25,3 +25,17 @@ possible_config_files: list[Path] = [
 
 USER_CONFIG: configparser.ConfigParser = configparser.ConfigParser()
 USER_CONFIG.read(possible_config_files)
+
+
+def replace_config_with_dummy():
+    """
+    Replaces the USER_CONFIG variable with dummy values to enable testing,
+    without providing actual user config
+    """
+    timtools.settings.USER_CONFIG = {
+        "telegram": {
+            "chat_id": "12345",
+            "chat_user": "test",
+            "api_key": "ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
+        }
+    }
