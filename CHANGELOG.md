@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.6.1 (2022-11-13)
+### Fix
+* **settings.py:** Allow programs to use a dummy config in tests ([`4ca3b21`](https://github.com/tim83/timtools/commit/4ca3b21ba9f6707dae4cb06052d3cf59e64f357d))
+
 ## v1.6.0 (2022-10-29)
 ### Feature
 * **settings.py:** Allow checking multiple config files ([`8348d84`](https://github.com/tim83/timtools/commit/8348d84e2760704e1e9d2a9856ee2f64bf0a5456))
