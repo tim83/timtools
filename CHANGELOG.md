@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.0 (2022-12-14)
+### Feature
+* **bash.py:** Add the ability to pass extra arguments directly to subprocess.Popen ([`3837433`](https://github.com/tim83/timtools/commit/383743338f2c4c77616d3f1da2989ccc6ff6e55c))
+* **bash.py:** Remove run_bash link to run and add deprecation warning ([`853e955`](https://github.com/tim83/timtools/commit/853e95581d650b68da3d15094fb95cb38e4a4aef))
+
+### Breaking
+* timtools.bash.run_bash will no longer work and instead just give a DeprecationWarning  ([`853e955`](https://github.com/tim83/timtools/commit/853e95581d650b68da3d15094fb95cb38e4a4aef))
+
 ## v1.6.2 (2022-11-13)
 ### Fix
 * **settings.py:** Fix dummy tests and add tests for it ([`d5b6789`](https://github.com/tim83/timtools/commit/d5b6789e61285375af277fc898e4b7851abcbd82))
