@@ -22,6 +22,7 @@ def get_output(  # pylint: disable=too-many-arguments
     capture_stderr: bool = False,
     custom_env: dict = None,
     timeout: float = None,
+    **kwargs
 ) -> str:
     """Run a command and return the output"""
     result: CommandResult = run(
@@ -31,17 +32,19 @@ def get_output(  # pylint: disable=too-many-arguments
         capture_stderr=capture_stderr,
         custom_env=custom_env,
         timeout=timeout,
+        **kwargs
     )
     return result.output
 
 
-def run(  # pylint: disable=too-many-arguments
+def run(  # pylint: disable=too-many-arguments,too-many-locals
     cmd: (list, str),
     passable_exit_codes: list = None,
     capture_stdout: bool = False,
     capture_stderr: bool = False,
     custom_env: dict = None,
     timeout: float = None,
+    **kwargs
 ) -> CommandResult:
     """Run a command"""
     cmd: list[str]
@@ -59,19 +62,18 @@ def run(  # pylint: disable=too-many-arguments
             env[key] = custom_env[key]
 
     # Execute command and redirect
-    stdargs: dict[str]
+    output_args: dict[str]
     if capture_stdout and capture_stderr:
-        stdargs = {"stdout": subprocess.PIPE, "stderr": subprocess.PIPE}
+        output_args = {"stdout": subprocess.PIPE, "stderr": subprocess.PIPE}
     elif capture_stdout and not capture_stderr:
-        stdargs = {"stdout": subprocess.PIPE}
+        output_args = {"stdout": subprocess.PIPE}
     elif not capture_stdout and capture_stderr:
-        stdargs = {"stderr": subprocess.PIPE}
+        output_args = {"stderr": subprocess.PIPE}
     else:
-        stdargs = {}
+        output_args = {}
 
-    # with subprocess.Popen(cmd, env=env, **stdargs) as process:
     process = subprocess.Popen(  # pylint: disable=consider-using-with
-        cmd, env=env, **stdargs
+        cmd, env=env, **output_args, **kwargs
     )
     output = process.communicate(timeout=timeout)[0] or bytes()
     exitcode = process.returncode
