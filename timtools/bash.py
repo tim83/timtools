@@ -24,7 +24,7 @@ def get_output(  # pylint: disable=too-many-arguments
     timeout: float = None,
 ) -> str:
     """Run a command and return the output"""
-    result: CommandResult = run_bash(
+    result: CommandResult = run(
         cmd,
         passable_exit_codes=passable_exit_codes,
         capture_stdout=capture_stdout,
@@ -89,4 +89,6 @@ def run(  # pylint: disable=too-many-arguments
     return result
 
 
-run_bash = run
+def run_bash():
+    """Old implementation of bash.run, now deprecated"""
+    raise DeprecationWarning("bash.run_bash has been replaced by bash.run")
