@@ -58,8 +58,7 @@ def run(  # pylint: disable=too-many-arguments,too-many-locals
 
     env = os.environ.copy()
     if custom_env is not None:
-        for key in custom_env.keys():
-            env[key] = custom_env[key]
+        env.update(custom_env)
 
     # Execute command and redirect
     output_args: dict[str]
