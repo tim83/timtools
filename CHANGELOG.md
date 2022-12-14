@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.1 (2022-12-14)
+### Performance
+* **bash.py:** Use build-in dict.update() instead of manually checking keys ([`077bbf3`](https://github.com/tim83/timtools/commit/077bbf3a67d56a9d574559183793a959b399bbc1))
+
 ## v2.0.0 (2022-12-14)
 ### Feature
 * **bash.py:** Add the ability to pass extra arguments directly to subprocess.Popen ([`3837433`](https://github.com/tim83/timtools/commit/383743338f2c4c77616d3f1da2989ccc6ff6e55c))
