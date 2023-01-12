@@ -21,7 +21,7 @@ jobs:
       - name: Run flake8
         run: poetry run flake8 .
       - name: Run pylint
-        run: poetry run pylint sshtools
+        run: poetry run pylint timtools
   code-test:
     strategy:
       fail-fast: false
