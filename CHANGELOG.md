@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.2 (2023-01-12)
+### Fix
+* **notify.py:** Make bot creation compatible with async version of python-telegram-bot ([`5248735`](https://github.com/tim83/timtools/commit/5248735a7cefbdba20ec089b90d3f32da62a3f47))
+
 ## v2.0.1 (2022-12-14)
 ### Performance
 * **bash.py:** Use build-in dict.update() instead of manually checking keys ([`077bbf3`](https://github.com/tim83/timtools/commit/077bbf3a67d56a9d574559183793a959b399bbc1))
