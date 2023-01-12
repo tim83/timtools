@@ -1,6 +1,7 @@
 """Module containing tools for sending telegram messages"""
 from __future__ import annotations  # python -3.9 compatibility
 
+import asyncio
 import csv
 import datetime as dt
 import typing
@@ -46,6 +47,13 @@ class TelegramNotify:
 
         self.timeout_window = timeout_window
 
+    async def _create_bot(self):
+        """Create a bot object"""
+        async with telegram.Bot(self.api_key) as bot:
+            bot_info = await bot.get_me()  # check the credentials
+            logger.error("Creating bot instance: %s", str(bot_info))
+            self._bot_instance = bot
+
     @property
     def bot(self) -> telegram.Bot:
         """
@@ -53,7 +61,7 @@ class TelegramNotify:
         If there was already an instance created, that instance will be returned
         """
         if self._bot_instance is None:
-            self._bot_instance = telegram.Bot(self.api_key)
+            asyncio.run(self._create_bot())
         return self._bot_instance
 
     def send_text(self, text: str):
