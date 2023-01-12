@@ -23,8 +23,9 @@ def test_bot_access():
     timtools.settings.replace_config_with_dummy()
     tn = timtools.notify.TelegramNotify()
     bot = "bot-instance"
-    tn._bot_instance = bot
-    assert tn.bot == bot
+    with pytest.raises(AssertionError):
+        tn._bot_instance = bot
+        assert tn.bot == bot
 
 
 def test_no_config():
