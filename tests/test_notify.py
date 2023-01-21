@@ -23,7 +23,7 @@ def test_bot_access():
     timtools.settings.replace_config_with_dummy()
     tn = timtools.notify.TelegramNotify()
     bot = "bot-instance"
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         tn._bot_instance = bot
         assert tn.bot == bot
 

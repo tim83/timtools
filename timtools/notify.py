@@ -63,7 +63,8 @@ class TelegramNotify:
         if self._bot_instance is None:
             asyncio.run(self._create_bot())
 
-        assert isinstance(self._bot_instance, telegram.Bot)
+        if not isinstance(self._bot_instance, telegram.Bot):
+            raise ValueError("Bot instance is not of the telegram.Bot type")
         return self._bot_instance
 
     def send_text(self, text: str):
