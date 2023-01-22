@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.0 (2023-01-22)
+### Feature
+* **ntfy.py:** Add notifier for ntfy.sh ([`2722074`](https://github.com/tim83/timtools/commit/27220746c0b1750246bef070af490a8ebb0ac947))
+
 ## v2.0.3 (2023-01-21)
 ### Fix
 * **notify.py:** Replace assert check with an if statement (deepsource) ([`897d2a6`](https://github.com/tim83/timtools/commit/897d2a6c2797f21080b485d8776a622e1a4da52a))
