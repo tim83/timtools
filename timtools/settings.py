@@ -35,7 +35,12 @@ def replace_config_with_dummy():
     timtools.settings.USER_CONFIG = {
         "telegram": {
             "chat_id": "12345",
-            "chat_user": "test",
+            "chat_user": "testuser",
             "api_key": "ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
-        }
+        },
+        "ntfy": {
+            "default_topic": "https://example.com/testtopic",
+            "default_user": "testuser",
+            "default_password": "testpassword",
+        },
     }
