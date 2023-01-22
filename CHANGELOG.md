@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.3 (2023-01-21)
+### Fix
+* **notify.py:** Replace assert check with an if statement (deepsource) ([`897d2a6`](https://github.com/tim83/timtools/commit/897d2a6c2797f21080b485d8776a622e1a4da52a))
+
 ## v2.0.2 (2023-01-12)
 ### Fix
 * **notify.py:** Make bot creation compatible with async version of python-telegram-bot ([`5248735`](https://github.com/tim83/timtools/commit/5248735a7cefbdba20ec089b90d3f32da62a3f47))
