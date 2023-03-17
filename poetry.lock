@@ -473,6 +473,14 @@ docs = ["sphinx", "furo", "zope.component", "django", "sybil (>=3)", "twisted"]
 test = ["mypy", "pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "django", "sybil (>=3)", "twisted"]
 
 [[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "main"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -559,7 +567,7 @@ python-versions = ">=3.7,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<4.0"
-content-hash = "2af1438c007017481c72dec3fad9414a68c4014bbb403dc7dd51514602dfa153"
+content-hash = "1f37ed35782f875a6efdbaecd77ae05b7022302a5007aa10342ab9cbf126fed5"
 
 [metadata.files]
 anyio = [
@@ -811,6 +819,7 @@ testfixtures = [
     {file = "testfixtures-7.1.0-py3-none-any.whl", hash = "sha256:d37d8f4ccc7755ab614cc8fb54b2e8b9fe522ab5dcf11b9d141f9be633c200f5"},
     {file = "testfixtures-7.1.0.tar.gz", hash = "sha256:456ce4f393160f27cd6840a5370ecf4a70f1721737f5e67a2af79e6c817804a4"},
 ]
+toml = []
 tomli = []
 tomlkit = []
 typing-extensions = [
