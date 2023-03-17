@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 """Manager for the python package"""
 
 from pathlib import Path
@@ -7,7 +6,7 @@ import toml
 from setuptools import setup
 
 pyproject_path = Path(__file__).parent / "pyproject.toml"
-with open(pyproject_path, "r") as fobj:
+with open(pyproject_path, "r", encoding="utf-8") as fobj:
     toml_str = fobj.read()
     parsed_toml = toml.loads(toml_str)
 
