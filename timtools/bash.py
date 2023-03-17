@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 """Tools for running commands on the shell"""
 
 import dataclasses

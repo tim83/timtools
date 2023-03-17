@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 """Tests the functions in bash.py related to executing bash command"""
 
 import datetime as dt
