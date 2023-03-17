@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.1 (2023-03-17)
+### Fix
+* **pyproject.toml:** Add toml as a depdency ([`d052f32`](https://github.com/tim83/timtools/commit/d052f327201ac6b46f8f6105513a38ded52416bd))
+* **pyproject.toml:** Add requests to dependencies ([`71dfbbb`](https://github.com/tim83/timtools/commit/71dfbbb806ff01d408064cde1418d10f974876a6))
+
 ## v2.1.0 (2023-01-22)
 ### Feature
 * **ntfy.py:** Add notifier for ntfy.sh ([`2722074`](https://github.com/tim83/timtools/commit/27220746c0b1750246bef070af490a8ebb0ac947))
